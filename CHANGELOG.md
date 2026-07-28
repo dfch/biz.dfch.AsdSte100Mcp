@@ -11,9 +11,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial project scaffold for `biz.dfch.AsdSte100Mcp`.
 - AGPL-3.0-or-later license and SPDX headers in all Python source files.
-- Runtime dependencies: `python-dotenv>=1.2.2`, `mcp`, `typer>=0.12`.
+- Runtime dependencies: `python-dotenv>=1.2.2`, `mcp`, `typer>=0.12`,
+  `pydantic-settings`, `biz-dfch-ste100vocab`.
 - Console script entrypoint `ste100-mcp` pointing to `biz.dfch.asdste100mcp.cli:app`.
-- GitHub Actions workflows for CI and publishing.
+- `MCPServer` with five read-only tools: `find`, `match`, `similar`, `list`, `count`;
+  backed by the local `biz-dfch-ste100vocab` library.
+- Typer CLI entry point with `--transport`, `--host`, and `--port` options for
+  stdio and SSE transport modes.
+- `Settings` class (`settings.py`) reading `STE100_MCP_*` environment variables
+  via `pydantic-settings`.
+- Pydantic models `Word`, `WordMeaning`, `WordNote` in `models/` package,
+  mirroring the vocab library dataclasses.
+- GitHub Actions CI workflow (`ci.yml`) running ruff, pylint, and unit tests
+  across Python 3.11, 3.12, and 3.13.
+- GitHub Actions publish workflow (`publish.yml`) building and publishing to
+  TestPyPI and PyPI on version tags, then creating a GitHub release.
 - `CONTRIBUTING.md`, `CODE_OF_CONDUCT.md`, and `SECURITY.md`.
+- `CHANGELOG.md` following the Keep a Changelog 1.0.0 format.
 
-[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/HEAD...HEAD
+### Fixed
+
+- Replaced incorrect `dotenv` dependency with `python-dotenv`.
+- Corrected stale `biz.dfch.AsdSte100Vocab` project name references in
+  `README.md`, `pyproject.toml`, `cli.py`, `__main__.py`, and `__init__.py`.
+- Fixed TOML syntax error (missing comma in `classifiers` array in `pyproject.toml`).
+- Removed over-broad `pull-requests: write` permission from CI workflow.
+- Pinned `pypa/gh-action-pypi-publish` from floating `release/v1` tag to full
+  commit SHA.
+- Removed unnecessary single-entry `strategy`/`matrix` from publish workflow jobs.
+- Fixed pylint warnings: added missing docstrings, moved `import os` to top level
+  in `cli.py`, and added targeted `pylint: disable` comments in `server.py` for
+  justified suppressions (`invalid-name`, `global-statement`, `protected-access`).
+
+### Removed
+
+- Removed `main.py` scaffold placeholder; the real entry point is `cli.py`.
+
+[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/9c36e28...HEAD

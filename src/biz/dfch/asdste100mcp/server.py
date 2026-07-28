@@ -49,7 +49,7 @@ from .settings import Settings
 # Shared vocabulary instance (loaded once at startup)
 # ---------------------------------------------------------------------------
 
-_vocab: Vocab | None = None
+_vocab: Vocab | None = None  # pylint: disable=invalid-name
 
 
 def _get_vocab() -> Vocab:
@@ -64,7 +64,7 @@ def _get_vocab() -> Vocab:
 
 @asynccontextmanager
 async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]:  # noqa: ARG001
-    global _vocab
+    global _vocab  # pylint: disable=global-statement
     _ = server
     settings = Settings()
     _vocab = Vocab(
@@ -121,7 +121,7 @@ def find(term: _Term) -> list[Word]:
     """
 
     words = _get_vocab().find(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]
+    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
     return result
 
 
@@ -150,7 +150,7 @@ def match(term: _Term) -> list[Word]:
     """
 
     words = _get_vocab().match(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]
+    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
     return result
 
 
@@ -179,7 +179,7 @@ def similar(term: _Term) -> list[Word]:
     """
 
     words = _get_vocab().similar(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]
+    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
     return result
 
 

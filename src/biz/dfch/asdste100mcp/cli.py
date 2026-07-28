@@ -70,6 +70,7 @@ Environment variables (all optional, CLI flags take precedence):
     TCP port for SSE mode (default ``8000``).
 """
 
+import os
 import sys
 from pathlib import Path
 from typing import Annotated, Optional
@@ -107,8 +108,6 @@ app = typer.Typer(
 
 def _warn_on_public_binding(host: str) -> None:
     """Warn when binding to all interfaces outside a container."""
-    import os
-
     if host not in ("0.0.0.0", "::"):
         return
     in_container = (
