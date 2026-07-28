@@ -1,0 +1,11 @@
+{
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s", "tests",
+        "-t", ".",
+        "-p", "test_*.py"
+    ],
+    "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"
+}

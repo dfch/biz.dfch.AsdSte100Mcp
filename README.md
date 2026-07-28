@@ -65,6 +65,123 @@ ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 | `STE100_MCP_USE_STE100` | `true` | Load the built-in ASD-STE100 Issue 9 vocabulary |
 | `STE100_MCP_USE_STE100_TECHNICAL_WORDS` | `false` | Also load the technical words vocabulary |
 
+## Development
+
+### Install dev dependencies
+
+```bash
+uv sync --all-extras
+```
+
+### Run linters
+
+```bash
+uv run --frozen ruff format --check
+uv run --frozen ruff check
+uv run --frozen pylint $(git ls-files '*.py')
+```
+
+### Run tests
+
+```bash
+uv run --frozen python -m unittest discover -v -s tests -t . -p "test_*.py"
+```
+
+## Make a Release
+
+### 1. Make sure all tests pass
+
+Before releasing, make sure the CI pipeline is green on the `dev` branch:
+
+```bash
+uv run --frozen ruff format --check
+uv run --frozen ruff check
+uv run --frozen pylint $(git ls-files '*.py')
+uv run --frozen python -m unittest discover -v -s tests -t . -p "test_*.py"
+```
+
+### 2. Increase the version
+
+Update the version in `pyproject.toml`:
+
+```toml
+version = "x.y.z"
+```
+
+### 3. Commit and push to `dev`
+
+```bash
+git add pyproject.toml CHANGELOG.md
+git commit -m "chore: bump version to vx.y.z"
+git push origin dev
+```
+
+### 4. Merge `dev` into `main`
+
+```bash
+git checkout main
+git merge dev
+git push origin main
+```
+
+### 5. Create and push a version tag
+
+```bash
+export VERSION=x.y.z
+git tag v${VERSION}
+git push origin v${VERSION}
+```
+
+Pushing the tag triggers the `publish.yml` workflow, which will:
+
+1. Build the sdist and wheel.
+2. Publish to **TestPyPI** (environment `testpypi`).
+3. Publish to **PyPI** (environment `pypi`), only if TestPyPI succeeded.
+4. Create a **GitHub Release** with auto-generated notes and the distribution artifacts attached.
+
+Then switch back to `dev` to continue work:
+
+```bash
+git checkout dev
+```
+
+### Configure Trusted Publishing
+
+The workflow uses OIDC Trusted Publishing — no API tokens or secrets are needed.
+
+#### GitHub: create environments
+
+Go to your repo → **Settings** → **Environments** and create two environments:
+
+| Environment | Recommended protection |
+|---|---|
+| `testpypi` | None required |
+| `pypi` | Add a required reviewer to prevent accidental production releases |
+
+#### TestPyPI
+
+Log in at [test.pypi.org](https://test.pypi.org) → **Your account** → **Publishing** → **Add a new pending publisher**:
+
+| Field | Value |
+|---|---|
+| PyPI project name | `biz-dfch-asdste100mcp` |
+| Owner | `dfch` |
+| Repository | `biz.dfch.AsdSte100Mcp` |
+| Workflow name | `publish.yml` |
+| Environment | `testpypi` |
+
+#### PyPI
+
+Log in at [pypi.org](https://pypi.org) → **Your account** → **Publishing** → **Add a new pending publisher**:
+
+| Field | Value |
+|---|---|
+| PyPI project name | `biz-dfch-asdste100mcp` |
+| Owner | `dfch` |
+| Repository | `biz.dfch.AsdSte100Mcp` |
+| Workflow name | `publish.yml` |
+| Environment | `pypi` |
+
 ## License
 
 [AGPL-3.0-or-later](LICENSE)
