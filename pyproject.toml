@@ -54,8 +54,8 @@ dependencies = [
     "python-dotenv>=1.2.2",
     "mcp",
     "typer>=0.12",
-    "biz-dfch-ste100vocab",
     "pydantic-settings>=2.14.2",
+    "biz-dfch-ste100vocab>=0.7.1",
 ]
 
 # Install project in editable mode:
@@ -116,6 +116,3 @@ namespaces = true
     "data/*.jsonl",
     "py.typed"
 ]
-
-[tool.uv.sources]
-biz-dfch-ste100vocab = { path = "../biz.dfch.AsdSte100Vocab", editable = true }
