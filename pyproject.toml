@@ -1,0 +1,121 @@
+[build-system]
+requires = ["setuptools>=81.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "biz-dfch-asdste100mcp"
+version = "0.1.0"
+description = "An MCP for the ASD-STE100 (Simplified Technical English) Issue 9 vocabulary."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [{name = "Ronald Rink"}]
+maintainers = [  
+    { name = "Ronald Rink" }  
+]
+
+keywords = [
+  "ASD-STE100",
+  "dictionary",
+  "cnl",
+  "controlled language",
+  "controlled natural language",
+  "llm",
+  "mcp",
+  "model-context-protocol",
+  "simplified-technical-english",
+  "Simplified Technical English",
+  "STE100",
+  "STE100 Issue 9",
+  "technical writing",
+  "technical-writing",
+  "terminology",
+  "vocabulary"
+]
+
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Natural Language :: English",
+  "Topic :: Text Processing :: Linguistic",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+dependencies = [
+    "python-dotenv>=1.2.2",
+    "mcp",
+    "typer>=0.12",
+    "biz-dfch-ste100vocab",
+    "pydantic-settings>=2.14.2",
+]
+
+# Install project in editable mode:
+# python -m pip install -e ".[dev]"
+[project.optional-dependencies]
+test = [
+    "coverage",
+    "parameterized>=0.9.0",
+    "pylint>=4.0.0",
+]
+
+dev = [
+    "twine",
+    "build",
+    "mcp[cli]",
+    "pylint",
+    "ruff>=0.16.0",
+    "uv",
+    "biz-dfch-asdste100mcp[test]",
+]
+
+build = [
+    "pyinstaller>=6.20.0",
+    "rich",
+]
+
+
+[project.urls]  
+Homepage = "https://github.com/dfch/biz.dfch.AsdSte100Mcp.git"  
+Repository = "https://github.com/dfch/biz.dfch.AsdSte100Mcp.git"  
+Changelog = "https://github.com/dfch/biz.dfch.AsdSte100Mcp/blob/main/CHANGELOG.md"
+Issues = "https://github.com/dfch/biz.dfch.AsdSte100Mcp/issues"
+
+[project.scripts]
+ste100-mcp = "biz.dfch.asdste100mcp.cli:app"
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["E501"]
+
+[tool.pylint.format]
+max-line-length = 120
+
+[tool.setuptools]  
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+namespaces = true
+
+[tool.setuptools.package-data]
+"biz.dfch.asdste100mcp" = [
+    "data/*.jsonl",
+    "py.typed"
+]
+
+[tool.uv.sources]
+biz-dfch-ste100vocab = { path = "../biz.dfch.AsdSte100Vocab", editable = true }
