@@ -65,6 +65,29 @@ ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 | `STE100_MCP_USE_STE100` | `true` | Load the built-in ASD-STE100 Issue 9 vocabulary |
 | `STE100_MCP_USE_STE100_TECHNICAL_WORDS` | `false` | Also load the technical words vocabulary |
 
+### OpenCode Configuration
+
+
+## Adding ASD-STE100 MCP Server to OpenCode
+
+To add the ASD-STE100 (Simplified Technical English) MCP server to your OpenCode configuration:
+
+1. Open your OpenCode config file (typically `~/.config/opencode/opencode.json` or `~/.config/opencode/opencode.jsonc`)
+
+2. Add the following configuration to the `mcp` section (and use it via `stdio`):
+
+```json
+"asdste100": {
+  "type": "local",
+  "enabled": true,
+  "command": ["uvx", "--from", "biz-dfch-asdste100mcp", "ste100-mcp"]
+}
+```
+
+3. Save the file and restart OpenCode
+
+This enables OpenCode to access ASD-STE100 vocabulary lookups for technical writing and documentation compliance.
+
 ## Development
 
 ### Install dev dependencies

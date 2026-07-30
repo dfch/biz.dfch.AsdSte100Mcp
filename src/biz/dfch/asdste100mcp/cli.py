@@ -68,6 +68,9 @@ Environment variables (all optional, CLI flags take precedence):
     Bind address for SSE mode (default ``127.0.0.1``).
 ``STE100_MCP_PORT``
     TCP port for SSE mode (default ``8000``).
+``STE100_MCP_FILES``
+    Colon-separated list of additional vocabulary files.  The ``--file``
+    CLI flag is merged with this list (duplicates are removed).
 """
 
 import os
@@ -79,6 +82,7 @@ import typer
 from dotenv import find_dotenv, load_dotenv
 
 from .server import mcp
+from .settings import Factory
 
 # ---------------------------------------------------------------------------
 # .env loading
@@ -145,7 +149,7 @@ def serve(
             help="Bind address (SSE mode only).",
             show_default=True,
         ),
-    ] = "127.0.0.1",
+    ] = "localhost",
     port: Annotated[
         int,
         typer.Option(
@@ -163,6 +167,18 @@ def serve(
             help="Path to a .env file. Overrides the auto-discovered one.",
         ),
     ] = None,
+    files: Annotated[
+        Optional[list[Path]],
+        typer.Option(
+            "--file",
+            "-f",
+            help="Path to a vocabulary file (*.jsonl). You can use this option more than once.",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            readable=True,
+        ),
+    ] = None,
 ) -> None:
     """Start the ASD-STE100 MCP server."""
     if env_file is not None:
@@ -170,6 +186,8 @@ def serve(
             typer.echo(f"ERROR: --env file not found: '{env_file}'", err=True)
             raise typer.Exit(code=1)
         load_dotenv(env_file, override=True)
+
+    Factory.create_instance(files or [])
 
     if transport.lower() == "sse":
         _warn_on_public_binding(host)

@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-07-30
+
+### Added
+
+- `--file / -f` CLI option on `ste100-mcp` (repeatable): pass one or more
+  `*.jsonl` vocabulary files at startup.  Paths are merged with those from
+  `STE100_MCP_FILES`; duplicates are removed while preserving order.
+- `Factory` class in `settings.py` — thread-safe singleton for
+  `Settings` using a double-checked lock.  Class-level state removes the
+  need for a module-level `global` variable.
+  - `Factory.create_instance(extra_files)` — creates the singleton, merges
+    CLI-supplied paths with env-supplied paths, asserts it is called only once.
+  - `Factory.get_instance()` — returns the singleton, asserts
+    `create_instance` was called first.
+- `tests/settings/test_factory.py` — 8 unit tests covering singleton
+  creation, identity, deduplication, and both `AssertionError` guard paths.
+
+### Changed
+
+- `cli.py` calls `Factory.create_instance(files or [])` before `mcp.run()`
+  so CLI-supplied paths are available to the server lifespan.
+- `server.py` `_lifespan` calls `Factory.get_instance()` instead of
+  constructing a new `Settings()` on every startup.
+
+### Fixed
+
+- Removed bogus `--file` validation block in `cli.py` that called
+  `load_dotenv` instead of exiting on error (Typer's `exists=True` already
+  rejects non-existent paths).
+- Changed `--file` default from mutable `[]` to `None` to avoid the
+  mutable-default-argument footgun.
+
 ## [0.1.1] - 2026-07-30
 
 ### Changed
@@ -70,6 +102,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed `main.py` scaffold placeholder; the real entry point is `cli.py`.
 
-[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/9c36e28...v0.1.0

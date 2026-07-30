@@ -41,7 +41,7 @@ from pydantic import Field
 
 from biz.dfch.asdste100vocab import Vocab
 
-from .settings import Settings
+from .settings import Factory
 
 
 # ---------------------------------------------------------------------------
@@ -65,7 +65,7 @@ def _get_vocab() -> Vocab:
 async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]:  # noqa: ARG001
     global _vocab  # pylint: disable=global-statement
     _ = server
-    settings = Settings()
+    settings = Factory.get_instance()
     _vocab = Vocab(
         files=settings.files,
         use_ste100=settings.use_ste100,
