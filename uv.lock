@@ -76,7 +76,7 @@ wheels = [
 
 [[package]]
 name = "biz-dfch-asdste100mcp"
-version = "0.1.0"
+version = "0.1.1"
 source = { editable = "." }
 dependencies = [
     { name = "biz-dfch-ste100vocab" },
