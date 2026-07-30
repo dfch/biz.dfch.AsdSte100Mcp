@@ -22,12 +22,12 @@ library — no network calls are made at tool-invocation time.
 
 Tools
 -----
-find    -- exact term lookup; returns matching entries.
-match   -- regex match against terms; returns matching entries.
-similar -- fuzzy / prefix lookup; returns matching entries.
-list    -- return all entries in the vocabulary.
-count   -- return the total number of entries in the vocabulary.
-"""
+find    -- Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `asdste100_match` with a wildcard if this tool returns no items.
+match   -- Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$).
+similar -- Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when find returns nothing and you want suggestions.
+list    -- Return all vocabulary entries. Only use when you need to process the full vocabulary. Use asdste100_count instead if you only need the total. This operation is expensive and return a large number of text.
+count   -- Return the total number of entries in the vocabulary. Use instead of asdste100_list when you only need the count.
+"""  # noqa: E501
 
 from __future__ import annotations
 
@@ -41,7 +41,6 @@ from pydantic import Field
 
 from biz.dfch.asdste100vocab import Vocab
 
-from .models import Word
 from .settings import Settings
 
 
@@ -84,7 +83,7 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
 
 mcp = MCPServer(
     name="ste100-mcp",
-    instructions="Look up ASD-STE100 Issue 9 vocabulary entries.",
+    instructions="Search ASD-STE100 Issue 9 vocabulary entries.",
     lifespan=_lifespan,
 )
 
@@ -96,129 +95,8 @@ _READ_ONLY = ToolAnnotations(
 
 _Term = Annotated[str, Field(min_length=1, max_length=200, description="The term to look up.")]
 
-
 # ---------------------------------------------------------------------------
-# Tool 1 — find
-# ---------------------------------------------------------------------------
-
-
-@mcp.tool(annotations=_READ_ONLY)
-def find(term: _Term) -> list[Word]:
-    """Find a term by exact match.
-
-    Performs a case-insensitive exact lookup of *term* in the ASD-STE100
-    Issue 9 vocabulary and returns all matching entries.
-
-    Parameters
-    ----------
-    term:
-        The word or phrase to look up exactly.
-
-    Returns
-    -------
-    list[Word]
-        A (possibly empty) list of matching vocabulary entries.
-    """
-
-    words = _get_vocab().find(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Tool 2 — match
+# Tool registration (side-effects: registers all tools on mcp).
 # ---------------------------------------------------------------------------
 
-
-@mcp.tool(annotations=_READ_ONLY)
-def match(term: _Term) -> list[Word]:
-    """Match terms using a regular expression.
-
-    Applies *term* as a regular expression pattern against all entries in
-    the ASD-STE100 Issue 9 vocabulary and returns every entry whose term
-    field matches.
-
-    Parameters
-    ----------
-    term:
-        A regular-expression pattern (e.g. ``"util.*"``).
-
-    Returns
-    -------
-    list[Word]
-        A (possibly empty) list of matching vocabulary entries.
-    """
-
-    words = _get_vocab().match(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Tool 3 — similar
-# ---------------------------------------------------------------------------
-
-
-@mcp.tool(annotations=_READ_ONLY)
-def similar(term: _Term) -> list[Word]:
-    """Find terms similar to the given term.
-
-    Performs a fuzzy / prefix lookup of *term* in the ASD-STE100 Issue 9
-    vocabulary and returns entries that are similar to the query, useful
-    when the exact spelling is unknown.
-
-    Parameters
-    ----------
-    term:
-        The word or phrase to search for approximately.
-
-    Returns
-    -------
-    list[Word]
-        A (possibly empty) list of similar vocabulary entries.
-    """
-
-    words = _get_vocab().similar(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Tool 4 — list
-# ---------------------------------------------------------------------------
-
-
-@mcp.tool(name="list", annotations=_READ_ONLY)
-def list_vocab() -> list[Word]:
-    """List all entries in the ASD-STE100 Issue 9 vocabulary.
-
-    Returns the complete vocabulary as a list of entry dicts.  Use
-    ``count`` first if you only need the total number of entries.
-
-    Returns
-    -------
-    list[Word]
-        All vocabulary entries.
-    """
-
-    words = _get_vocab().as_dict()
-    result = [Word.model_validate(w) for w in words]
-    return result
-
-
-# ---------------------------------------------------------------------------
-# Tool 5 — count
-# ---------------------------------------------------------------------------
-
-
-@mcp.tool(name="count", annotations=_READ_ONLY)
-def count_vocab() -> int:
-    """Return the total number of entries in the ASD-STE100 Issue 9 vocabulary.
-
-    Returns
-    -------
-    int
-        The number of entries in the vocabulary.
-    """
-
-    return len(_get_vocab())
+from . import tools  # noqa: E402, F401

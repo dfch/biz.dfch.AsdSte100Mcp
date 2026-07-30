@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Extracted each MCP tool into its own module under the new
+  `src/biz/dfch/asdste100mcp/tools/` sub-package (`find.py`, `match.py`,
+  `similar.py`, `list.py`, `count.py`).  `server.py` now contains only the
+  shared infrastructure (`mcp`, `_lifespan`, `_READ_ONLY`, `_Term`,
+  `_get_vocab`) and imports the `tools` package at the bottom to trigger
+  registration.  All nine unit tests continue to pass unchanged.
+- Moved tool unit tests (`test_find.py`, `test_match.py`, `test_similar.py`,
+  `test_count.py`) from `tests/` into the new `tests/tools/` sub-package to
+  mirror the source layout.
+- Moved `test_word.py` from `tests/` into the new `tests/models/` sub-package
+  to mirror the source layout.
+
 ## [0.1.0] - 2026-07-28
 
 ### Added
