@@ -1,4 +1,4 @@
-name: Pylint and unittest
+name: Lint and Test
 
 on: [push, pull_request]
 
