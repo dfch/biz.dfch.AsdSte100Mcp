@@ -3,7 +3,7 @@
 [![ASD-STE100: Issue 9](https://img.shields.io/badge/ASD--STE100-Issue%209-blue.svg)](https://www.asd-ste100.org/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)
-[![Pylint and unittest](https://github.com/dfch/biz.dfch.AsdSte100Mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/dfch/biz.dfch.AsdSte100Mcp/actions/workflows/ci.yml)
+[![Lint and Test](https://github.com/dfch/biz.dfch.AsdSte100Mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/dfch/biz.dfch.AsdSte100Mcp/actions/workflows/ci.yml)
 [![TestPyPI version](https://img.shields.io/badge/dynamic/json?url=https://test.pypi.org/pypi/biz-dfch-asdste100mcp/json&label=TestPyPI&query=$.info.version&color=orange)](https://test.pypi.org/project/biz-dfch-asdste100mcp/)
 [![PyPI version](https://img.shields.io/badge/dynamic/json?url=https://www.pypi.org/pypi/biz-dfch-asdste100mcp/json&label=PyPI&query=$.info.version&color=blue)](https://www.pypi.org/project/biz-dfch-asdste100mcp/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/biz-dfch-asdste100mcp.svg)](https://pypistats.org/packages/biz-dfch-asdste100mcp)
