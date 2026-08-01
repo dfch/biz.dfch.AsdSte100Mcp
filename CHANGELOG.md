@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `max_results` (default 25) and `offset` (default 0) pagination parameters
+  on `rules_search`.
+- New `SearchResult` model (`src/biz/dfch/asdste100mcp/models/search_result.py`)
+  wrapping the paginated `rules_search` response with `results`, `total`,
+  `offset`, `max_results`, and `truncated` fields, so callers can tell
+  whether a full page means "that's all the matches" or "there are more
+  -- call again with a higher `offset`".
+
+### Changed
+
+- **Breaking**: `rules_search` now returns a `SearchResult` object instead
+  of a bare `list[Rule]`; the page of matching rules is available at
+  `result.results`.
+
 ## [0.2.0] - 2026-08-01
 
 ### Added

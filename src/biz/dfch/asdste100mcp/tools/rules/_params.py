@@ -122,3 +122,22 @@ EntryTypeParam = Annotated[
         ),
     ),
 ]
+
+MaxResults = Annotated[
+    int,
+    Field(
+        default=25,
+        ge=1,
+        le=100,
+        description="The maximum number of matching rules to return.",
+    ),
+]
+
+Offset = Annotated[
+    int,
+    Field(
+        default=0,
+        ge=0,
+        description="The number of matching rules to skip before returning results, for pagination.",
+    ),
+]

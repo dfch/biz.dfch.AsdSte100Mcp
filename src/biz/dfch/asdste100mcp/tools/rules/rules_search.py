@@ -19,14 +19,18 @@
 
 from __future__ import annotations
 
-from biz.dfch.asdste100rules.models import Rule
-
+from ...models import SearchResult
 from ...server import _READ_ONLY, _get_rules, mcp
-from ._params import ContentTypes, SearchPattern
+from ._params import ContentTypes, MaxResults, Offset, SearchPattern
 
 
 @mcp.tool(annotations=_READ_ONLY)
-def rules_search(pattern: SearchPattern, content_types: ContentTypes = None) -> list[Rule]:
+def rules_search(
+    pattern: SearchPattern,
+    content_types: ContentTypes = None,
+    max_results: MaxResults = 25,
+    offset: Offset = 0,
+) -> SearchResult:
     """
     Full-text search for rules using a regular expression.
 
@@ -47,11 +51,30 @@ def rules_search(pattern: SearchPattern, content_types: ContentTypes = None) -> 
         this list is searched (``section``, ``category``, ``name``, and
         ``summary`` are always searched regardless). Use this to narrow
         the search to, e.g., only ``note`` or ``ste_example`` content.
+    max_results:
+        The maximum number of matching rules to return (default 25).
+    offset:
+        The number of matching rules to skip before returning results,
+        for pagination (default 0).
 
     Returns
     -------
-    list[Rule]
-        A (possibly empty) list of matching rules, in document order.
+    SearchResult
+        ``results`` holds the (possibly empty) page of matching rules,
+        in document order, after applying ``offset`` and ``max_results``.
+        ``total`` is the full match count before pagination, and
+        ``truncated`` tells the caller whether more matches exist beyond
+        this page -- i.e. whether a reached ``max_results`` means "that's
+        all of them" or "call again with a higher ``offset``".
     """
 
-    return _get_rules().search(pattern, content_types=content_types)
+    matches = _get_rules().search(pattern, content_types=content_types)
+    page = matches[offset : offset + max_results]
+    total = len(matches)
+    return SearchResult(
+        results=page,
+        total=total,
+        offset=offset,
+        max_results=max_results,
+        truncated=total > offset + len(page),
+    )

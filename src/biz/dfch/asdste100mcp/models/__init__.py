@@ -23,12 +23,14 @@ Usage::
     from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
 """
 
+from .search_result import SearchResult
 from .toc_entry import TocEntry
 from .word import Word
 from .word_meaning import WordMeaning
 from .word_note import WordNote
 
 __all__ = [
+    "SearchResult",
     "TocEntry",
     "Word",
     "WordMeaning",
