@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tests/tools/rules/` — unit tests for all eight new tools (via `Rules`
   directly, following the existing tool-test convention).
 - `tests/models/test_toc_entry.py` — unit tests for the new `TocEntry` model.
+- Python 3.14 to the list of supported and CI-tested versions.
 
 ## [0.1.3] - 2026-07-30
 

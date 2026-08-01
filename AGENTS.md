@@ -8,7 +8,7 @@ Quick reference for OpenCode agents working on **biz.dfch.AsdSte100Mcp** — an 
 - **Namespace**: `biz.dfch.asdste100mcp` (located in `src/biz/dfch/asdste100mcp/`)
 - **Entry point**: `ste100-mcp` CLI command (defined in `pyproject.toml:93`)
 - **License**: AGPL-3.0-or-later
-- **Python**: 3.11, 3.12, 3.13 (multi-version testing required)
+- **Python**: 3.11, 3.12, 3.13, 3.14 (multi-version testing required)
 - **Package manager**: `uv` (not pip)
 
 ## Developer Commands
@@ -91,7 +91,7 @@ uv run --frozen ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 - **Framework**: Standard Python `unittest` (not pytest)
 - **Test layout**: `tests/` mirrors `src/` structure (`tests/models/`, `tests/settings/`, `tests/tools/`)
 - **Discovery**: `python -m unittest discover` (required pattern: `test_*.py`)
-- **CI**: `.github/workflows/ci.yml` runs tests on Python 3.11, 3.12, 3.13
+- **CI**: `.github/workflows/ci.yml` runs tests on Python 3.11, 3.12, 3.13, 3.14
 
 ## CI/Release Workflow
 
@@ -117,7 +117,7 @@ uv run --frozen ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 
 - **uv not pip**: Always use `uv` commands; `pip` is not the project standard
 - **--frozen flag**: Lock file (`uv.lock`) is tracked; use `--frozen` to enforce reproducibility
-- **Multi-version testing**: Agents must run tests on 3.11, 3.12, 3.13 before approval
+- **Multi-version testing**: Agents must run tests on 3.11, 3.12, 3.13, 3.14 before approval
 - **Vocab is external**: Actual vocabulary data lives in `biz-dfch-ste100vocab` package (not in this repo)
 - **Lifespan pattern**: MCP server loads vocab once at startup via lifespan context manager (`server.py`)
 - **Read-only tools**: All five tools are read-only; no state modification
