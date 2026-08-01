@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Eight `rules_*` read-only tools backed by the `biz-dfch-asdste100rules` library:
+  `rules_find`, `rules_match`, `rules_search`, `rules_by_section`,
+  `rules_by_category`, `rules_examples`, `rules_overview`, `rules_toc`.
+  Return types reuse the library's own pydantic models (`Rule`,
+  `ContentItem`, `RuleOverview`, `ContentType`, `EntryType`) directly; a
+  new `TocEntry` model wraps the plain tuples returned by `Rules.toc()`.
+- `--rules-file / -r` CLI option on `ste100-mcp` (repeatable): pass one or
+  more rules JSON files at startup, merged with `STE100_MCP_RULES_FILES`.
+- `Settings.rules_files` and `Settings.use_ste100_rules` fields;
+  `Factory.create_instance(extra_files, extra_rules_files)` now also
+  merges rules file paths.
+- `tests/tools/rules/` — unit tests for all eight new tools (via `Rules`
+  directly, following the existing tool-test convention).
+- `tests/models/test_toc_entry.py` — unit tests for the new `TocEntry` model.
+
 ## [0.1.3] - 2026-07-30
 
 ### Changed

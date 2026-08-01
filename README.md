@@ -10,17 +10,32 @@
 [![MCP](https://img.shields.io/badge/MCP-Model_Context_Protocol-8A2BE2.svg)](https://modelcontextprotocol.io/)
 [![Auth: none](https://img.shields.io/badge/auth-none-brightgreen.svg)](#architecture-decision)
 
-An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 vocabulary.
+An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard.
 
 ## Tools
 
+### Vocabulary
+
 | Tool | Description |
 |---|---|
-| `find`  | Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `asdste100_match` with a wildcard if this tool returns no items. |
-| `match` | Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$). |
-| `similar` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when find returns nothing and you want suggestions. |
-| `list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use asdste100_count instead if you only need the total. This operation is expensive and return a large number of text. |
-| `count` | Return the total number of entries in the vocabulary. Use instead of asdste100_list when you only need the count. |
+| `word_find`  | Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `word_match` with a wildcard if this tool returns no items. |
+| `word_match` | Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$). |
+| `word_similar` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when `word_find` returns nothing and you want suggestions. |
+| `word_list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use `word_count` instead if you only need the total. This operation is expensive and returns a large number of text. |
+| `word_count` | Return the total number of entries in the vocabulary. Use instead of `word_list` when you only need the count. |
+
+### Rules
+
+| Tool | Description |
+|---|---|
+| `rules_find` | Search for rules in the ruleset by exact id (case-insensitive), e.g. `R1.1` or `GR-8`. Use this first when you know the exact id. |
+| `rules_match` | Search rules using a regular expression matched against the rule `name` and `summary`. |
+| `rules_search` | Full-text search across every text a rule carries (section, category, name, summary, and all content blocks: text, notes, examples, technical noun/verb lists). Optionally restrict to specific content types. |
+| `rules_by_section` | Search for rules by exact section name (case-insensitive), e.g. `Words`. |
+| `rules_by_category` | Search for rules by exact category name (case-insensitive), e.g. `Technical nouns`. |
+| `rules_examples` | Return content items across rules, optionally scoped by id/section/category and filtered by content type. |
+| `rules_overview` | Return a lightweight, per-rule overview (id, type, section, category, name, optional summary, and content counts/flags) without shipping every content item. |
+| `rules_toc` | Return the distinct (section, category) pairs as a table-of-contents outline, optionally scoped to one section. |
 
 ## Installation
 
@@ -56,6 +71,8 @@ ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 | `--host` | `STE100_MCP_HOST` | `127.0.0.1` | Bind address (SSE only) |
 | `--port` | `STE100_MCP_PORT` | `8000` | TCP port (SSE only) |
 | `--env` | — | auto-discovered | Path to a `.env` file |
+| `--file` / `-f` | `STE100_MCP_FILES` | _(empty)_ | Path to a vocabulary file (`*.jsonl`); repeatable |
+| `--rules-file` / `-r` | `STE100_MCP_RULES_FILES` | _(empty)_ | Path to a rules file (a single JSON array); repeatable |
 
 ### Vocabulary configuration
 
@@ -64,6 +81,13 @@ ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 | `STE100_MCP_FILES` | _(empty)_ | Colon-separated paths to additional vocabulary files |
 | `STE100_MCP_USE_STE100` | `true` | Load the built-in ASD-STE100 Issue 9 vocabulary |
 | `STE100_MCP_USE_STE100_TECHNICAL_WORDS` | `false` | Also load the technical words vocabulary |
+
+### Rules configuration
+
+| Env var | Default | Description |
+|---|---|---|
+| `STE100_MCP_RULES_FILES` | _(empty)_ | Colon-separated paths to additional rules files (each a single JSON array) |
+| `STE100_MCP_USE_STE100_RULES` | `true` | Load the built-in ASD-STE100 Issue 9 ruleset |
 
 ### OpenCode Configuration
 
@@ -86,7 +110,7 @@ To add the ASD-STE100 (Simplified Technical English) MCP server to your OpenCode
 
 3. Save the file and restart OpenCode
 
-This enables OpenCode to access ASD-STE100 vocabulary lookups for technical writing and documentation compliance.
+This enables OpenCode to access ASD-STE100 vocabulary and rules lookups for technical writing and documentation compliance.
 
 ## Development
 

@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Quick reference for OpenCode agents working on **biz.dfch.AsdSte100Mcp** — an MCP server for ASD-STE100 Issue 9 vocabulary.
+Quick reference for OpenCode agents working on **biz.dfch.AsdSte100Mcp** — an MCP server for ASD-STE100 Issue 9 standard.
 
 ## Project Shape
 
@@ -52,12 +52,22 @@ uv run --frozen ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 ### MCP Server Structure
 - **Server module**: `src/biz/dfch/asdste100mcp/server.py` — MCPServer instance, tool registration
 - **CLI entry**: `src/biz/dfch/asdste100mcp/cli.py` — Typer CLI with dual-transport support (stdio/SSE)
-- **Tools**: Each in `src/biz/dfch/asdste100mcp/tools/` — read-only vocabulary search tools
-  - `find.py` — exact term lookup
-  - `match.py` — regex pattern search
-  - `similar.py` — fuzzy matching
-  - `list.py` — all entries (expensive)
-  - `count.py` — entry count only
+- **Tools**: Each in `src/biz/dfch/asdste100mcp/tools/` — read-only search tools,
+  grouped into two sub-packages
+  - `words/` — vocabulary tools (`word_*`)
+    - `find.py` — exact term lookup
+    - `match.py` — regex pattern search
+    - `similar.py` — fuzzy matching
+    - `list.py` — all entries (expensive)
+    - `count.py` — entry count only
+  - `rules/` — ruleset tools (`rules_*`)
+    - `find.py` — exact id lookup
+    - `match.py` — regex over name/summary
+    - `search.py` — full-text search across all content
+    - `by_section.py` / `by_category.py` — exact section/category lookup
+    - `examples.py` — content items, optionally scoped/filtered
+    - `overview.py` — lightweight per-rule overview
+    - `toc.py` — (section, category) table-of-contents outline
 
 ### Data Models
 - `models/word.py` — Word model
