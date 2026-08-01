@@ -15,18 +15,28 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""MCP server for the ASD-STE100 Issue 9 vocabulary.
+"""MCP server for the ASD-STE100 Issue 9 vocabulary and rules.
 
 Exposes five read-only tools backed by the local ``biz-dfch-ste100vocab``
-library — no network calls are made at tool-invocation time.
+library and eight read-only tools backed by the local
+``biz-dfch-asdste100rules`` library — no network calls are made at
+tool-invocation time.
 
 Tools
 -----
-find    -- Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `asdste100_match` with a wildcard if this tool returns no items.
-match   -- Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$).
-similar -- Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when find returns nothing and you want suggestions.
-list    -- Return all vocabulary entries. Only use when you need to process the full vocabulary. Use asdste100_count instead if you only need the total. This operation is expensive and return a large number of text.
-count   -- Return the total number of entries in the vocabulary. Use instead of asdste100_list when you only need the count.
+word_find         -- Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `word_match` with a wildcard if this tool returns no items.
+word_match        -- Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$).
+word_similar      -- Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when word_find returns nothing and you want suggestions.
+word_list         -- Return all vocabulary entries. Only use when you need to process the full vocabulary. Use word_count instead if you only need the total. This operation is expensive and returns a large number of text.
+word_count        -- Return the total number of entries in the vocabulary. Use instead of word_list when you only need the count.
+rules_find        -- Search for rules by exact id (e.g. 'R1.1', 'GR-8').
+rules_match       -- Search rules using a regular expression over name and summary.
+rules_search      -- Full-text search rules, including every content block (notes, examples, technical noun/verb lists, ...).
+rules_by_section  -- Search for rules by exact section name.
+rules_by_category -- Search for rules by exact category name.
+rules_examples    -- Return content items across rules, optionally scoped and filtered.
+rules_overview    -- Return a lightweight, per-rule overview of the ruleset.
+rules_toc         -- Return the distinct (section, category) pairs as a table-of-contents outline.
 """  # noqa: E501
 
 from __future__ import annotations
@@ -39,6 +49,7 @@ from mcp.server import MCPServer
 from mcp_types import ToolAnnotations
 from pydantic import Field
 
+from biz.dfch.asdste100rules.rules import Rules
 from biz.dfch.asdste100vocab import Vocab
 
 from .settings import Factory
@@ -57,13 +68,25 @@ def _get_vocab() -> Vocab:
 
 
 # ---------------------------------------------------------------------------
-# Lifespan: load vocab on startup, release on shutdown
+# Shared rules instance (loaded once at startup)
+# ---------------------------------------------------------------------------
+
+_rules: Rules | None = None  # pylint: disable=invalid-name
+
+
+def _get_rules() -> Rules:
+    assert _rules is not None, "Rules not initialised — lifespan did not run."
+    return _rules
+
+
+# ---------------------------------------------------------------------------
+# Lifespan: load vocab and rules on startup, release on shutdown
 # ---------------------------------------------------------------------------
 
 
 @asynccontextmanager
 async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]:  # noqa: ARG001
-    global _vocab  # pylint: disable=global-statement
+    global _vocab, _rules  # pylint: disable=global-statement
     _ = server
     settings = Factory.get_instance()
     _vocab = Vocab(
@@ -71,10 +94,15 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
         use_ste100=settings.use_ste100,
         use_ste100_technical_word=settings.use_ste100_technical_words,
     )
+    _rules = Rules(
+        files=settings.rules_files,
+        use_builtin=settings.use_ste100_rules,
+    )
     try:
         yield {}
     finally:
         _vocab = None
+        _rules = None
 
 
 # ---------------------------------------------------------------------------
@@ -83,7 +111,7 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
 
 mcp = MCPServer(
     name="ste100-mcp",
-    instructions="Search ASD-STE100 Issue 9 vocabulary entries.",
+    instructions="Search ASD-STE100 Issue 9 vocabulary and rules entries.",
     lifespan=_lifespan,
 )
 

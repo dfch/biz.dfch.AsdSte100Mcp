@@ -15,18 +15,32 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""MCP tool registrations for the ASD-STE100 vocabulary and rules server.
+"""Tool: rules_by_category — exact category-name search in the ASD-STE100 Issue 9 ruleset."""
 
-Each sub-package registers a group of tools against the shared ``mcp``
-application instance: ``words`` for the vocabulary tools, ``rules`` for
-the rules tools.  Import this package to load all tools at once::
+from __future__ import annotations
 
-    from biz.dfch.asdste100mcp import tools  # noqa: F401 (side-effects only)
-"""
+from biz.dfch.asdste100rules.models import Rule
 
-from . import rules, words  # noqa: F401
+from ...server import _READ_ONLY, _get_rules, mcp
+from ._params import Category
 
-__all__ = [
-    "rules",
-    "words",
-]
+
+@mcp.tool(annotations=_READ_ONLY)
+def rules_by_category(category: Category) -> list[Rule]:
+    """
+    Search for rules in the ruleset by exact category name (case-insensitive).
+
+    Use `rules_toc` first if you do not know the exact category names.
+
+    Parameters
+    ----------
+    category:
+        The category name to search for, e.g. ``"Technical nouns"``.
+
+    Returns
+    -------
+    list[Rule]
+        A (possibly empty) list of matching rules.
+    """
+
+    return _get_rules().by_category(category)

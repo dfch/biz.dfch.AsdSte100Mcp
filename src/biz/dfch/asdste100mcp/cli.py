@@ -71,6 +71,9 @@ Environment variables (all optional, CLI flags take precedence):
 ``STE100_MCP_FILES``
     Colon-separated list of additional vocabulary files.  The ``--file``
     CLI flag is merged with this list (duplicates are removed).
+``STE100_MCP_RULES_FILES``
+    Colon-separated list of additional rules files.  The ``--rules-file``
+    CLI flag is merged with this list (duplicates are removed).
 """
 
 import os
@@ -129,7 +132,7 @@ def _warn_on_public_binding(host: str) -> None:
 
 
 @app.command()
-def serve(
+def serve(  # pylint: disable=R0913,R0917
     transport: Annotated[
         str,
         typer.Option(
@@ -179,6 +182,18 @@ def serve(
             readable=True,
         ),
     ] = None,
+    rules_files: Annotated[
+        Optional[list[Path]],
+        typer.Option(
+            "--rules-file",
+            "-r",
+            help="Path to a rules file (a single JSON array). You can use this option more than once.",
+            exists=True,
+            file_okay=True,
+            dir_okay=False,
+            readable=True,
+        ),
+    ] = None,
 ) -> None:
     """Start the ASD-STE100 MCP server."""
     if env_file is not None:
@@ -187,7 +202,7 @@ def serve(
             raise typer.Exit(code=1)
         load_dotenv(env_file, override=True)
 
-    Factory.create_instance(files or [])
+    Factory.create_instance(files or [], rules_files or [])
 
     if transport.lower() == "sse":
         _warn_on_public_binding(host)

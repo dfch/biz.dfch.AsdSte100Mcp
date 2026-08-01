@@ -58,6 +58,25 @@ class TestFactory(unittest.TestCase):
         result = Factory.create_instance(extra_files=[path, path])
         self.assertEqual(result.files.count(path), 1)
 
+    def test_create_instance_without_extra_rules_files_returns_settings(self):
+        """create_instance() called with no rules args must succeed."""
+        result = Factory.create_instance()
+        self.assertIsInstance(result, Settings)
+        self.assertIsInstance(result.rules_files, list)
+
+    def test_create_instance_with_extra_rules_files_merges_paths(self):
+        """Extra rules files passed to create_instance() must appear in settings.rules_files."""
+        extra = [Path("/tmp/opencode/a.json"), Path("/tmp/opencode/b.json")]
+        result = Factory.create_instance(extra_rules_files=extra)
+        for path in extra:
+            self.assertIn(path, result.rules_files)
+
+    def test_create_instance_deduplicates_extra_rules_files(self):
+        """Duplicate rules file paths must appear only once in settings.rules_files."""
+        path = Path("/tmp/opencode/a.json")
+        result = Factory.create_instance(extra_rules_files=[path, path])
+        self.assertEqual(result.rules_files.count(path), 1)
+
     def test_create_instance_twice_raises(self):
         """Calling create_instance() a second time must raise AssertionError."""
         Factory.create_instance()

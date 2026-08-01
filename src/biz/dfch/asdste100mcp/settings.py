@@ -30,13 +30,19 @@ STE100_MCP_USE_STE100
     Load the built-in ASD-STE100 Issue 9 vocabulary (default: true).
 STE100_MCP_USE_STE100_TECHNICAL_WORDS
     Also load the STE100 technical words vocabulary (default: false).
+STE100_MCP_RULES_FILES
+    Colon-separated list of paths to additional rules files to load.
+    Example: ``STE100_MCP_RULES_FILES=/data/custom_rules.json``
+STE100_MCP_USE_STE100_RULES
+    Load the built-in ASD-STE100 Issue 9 ruleset (default: true).
 
 Singleton helpers
 -----------------
-Factory.create_instance(extra_files)
+Factory.create_instance(extra_files, extra_rules_files)
     Create the shared :class:`Settings` instance from the environment,
-    merge *extra_files* (e.g. from the ``--file`` CLI flag), and store it.
-    Must be called exactly once before :meth:`Factory.get_instance`.
+    merge *extra_files* (e.g. from the ``--file`` CLI flag) and
+    *extra_rules_files* (e.g. from the ``--rules-file`` CLI flag), and
+    store it. Must be called exactly once before :meth:`Factory.get_instance`.
 Factory.get_instance()
     Return the shared :class:`Settings` instance.  Raises
     :exc:`AssertionError` if :meth:`Factory.create_instance` has not been
@@ -62,6 +68,8 @@ class Settings(BaseSettings):
     files: list[Path] = Field(default_factory=list)
     use_ste100: bool = True
     use_ste100_technical_words: bool = False
+    rules_files: list[Path] = Field(default_factory=list)
+    use_ste100_rules: bool = True
 
 
 # ---------------------------------------------------------------------------
@@ -86,17 +94,24 @@ class Factory:
     _lock: threading.Lock = threading.Lock()
 
     @staticmethod
-    def create_instance(extra_files: list[Path] | None = None) -> Settings:
+    def create_instance(
+        extra_files: list[Path] | None = None,
+        extra_rules_files: list[Path] | None = None,
+    ) -> Settings:
         """Create and store the shared :class:`Settings` instance.
 
         Reads configuration from environment variables, merges *extra_files*
-        with any paths already set via ``STE100_MCP_FILES`` (duplicates
-        removed, order preserved), and stores the result.
+        with any paths already set via ``STE100_MCP_FILES`` and
+        *extra_rules_files* with any paths already set via
+        ``STE100_MCP_RULES_FILES`` (duplicates removed, order preserved),
+        and stores the result.
 
         Parameters
         ----------
         extra_files:
             Additional vocabulary file paths from the CLI ``--file`` flag.
+        extra_rules_files:
+            Additional rules file paths from the CLI ``--rules-file`` flag.
 
         Returns
         -------
@@ -117,6 +132,8 @@ class Factory:
                 settings = Settings()
                 merged = list(dict.fromkeys(settings.files + (extra_files or [])))
                 settings.files = merged
+                merged_rules = list(dict.fromkeys(settings.rules_files + (extra_rules_files or [])))
+                settings.rules_files = merged_rules
                 Factory._instance = settings
 
         return Factory._instance

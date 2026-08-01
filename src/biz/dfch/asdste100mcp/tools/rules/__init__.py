@@ -15,22 +15,33 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Pydantic models mirroring the ASD-STE100 vocab dataclasses, plus small
-wrapper models for the ASD-STE100 rules tools.
+"""MCP tool registrations for the ASD-STE100 Issue 9 rules server.
 
-Usage::
+Each sub-module registers one ``rules_*`` tool against the shared ``mcp``
+application instance.  Import this package to load all rules tools at
+once::
 
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
+    from biz.dfch.asdste100mcp.tools import rules  # noqa: F401 (side-effects only)
 """
 
-from .toc_entry import TocEntry
-from .word import Word
-from .word_meaning import WordMeaning
-from .word_note import WordNote
+from . import (  # noqa: F401
+    rules_by_category,
+    rules_by_section,
+    rules_examples,
+    rules_find,
+    rules_match,
+    rules_overview,
+    rules_search,
+    rules_toc,
+)
 
 __all__ = [
-    "TocEntry",
-    "Word",
-    "WordMeaning",
-    "WordNote",
+    "rules_by_category",
+    "rules_by_section",
+    "rules_examples",
+    "rules_find",
+    "rules_match",
+    "rules_overview",
+    "rules_search",
+    "rules_toc",
 ]

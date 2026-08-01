@@ -15,22 +15,32 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Pydantic models mirroring the ASD-STE100 vocab dataclasses, plus small
-wrapper models for the ASD-STE100 rules tools.
+"""Tool: rules_by_section — exact section-name search in the ASD-STE100 Issue 9 ruleset."""
 
-Usage::
+from __future__ import annotations
 
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
-"""
+from biz.dfch.asdste100rules.models import Rule
 
-from .toc_entry import TocEntry
-from .word import Word
-from .word_meaning import WordMeaning
-from .word_note import WordNote
+from ...server import _READ_ONLY, _get_rules, mcp
+from ._params import Section
 
-__all__ = [
-    "TocEntry",
-    "Word",
-    "WordMeaning",
-    "WordNote",
-]
+
+@mcp.tool(annotations=_READ_ONLY)
+def rules_by_section(section: Section) -> list[Rule]:
+    """
+    Search for rules in the ruleset by exact section name (case-insensitive).
+
+    Use `rules_toc` first if you do not know the exact section names.
+
+    Parameters
+    ----------
+    section:
+        The section name to search for, e.g. ``"Words"``.
+
+    Returns
+    -------
+    list[Rule]
+        A (possibly empty) list of matching rules.
+    """
+
+    return _get_rules().by_section(section)

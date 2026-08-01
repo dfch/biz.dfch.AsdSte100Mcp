@@ -14,23 +14,3 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
-
-"""Pydantic models mirroring the ASD-STE100 vocab dataclasses, plus small
-wrapper models for the ASD-STE100 rules tools.
-
-Usage::
-
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
-"""
-
-from .toc_entry import TocEntry
-from .word import Word
-from .word_meaning import WordMeaning
-from .word_note import WordNote
-
-__all__ = [
-    "TocEntry",
-    "Word",
-    "WordMeaning",
-    "WordNote",
-]
