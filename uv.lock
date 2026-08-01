@@ -111,7 +111,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "biz-dfch-asdste100mcp", extras = ["test"], marker = "extra == 'dev'" },
-    { name = "biz-dfch-asdste100rules", specifier = ">=0.1.0" },
+    { name = "biz-dfch-asdste100rules", specifier = ">=0.1.1" },
     { name = "biz-dfch-asdste100vocab", specifier = ">=0.8.0" },
     { name = "build", marker = "extra == 'dev'" },
     { name = "coverage", marker = "extra == 'test'" },
@@ -132,16 +132,16 @@ provides-extras = ["test", "dev", "build"]
 
 [[package]]
 name = "biz-dfch-asdste100rules"
-version = "0.1.0"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "python-dotenv" },
     { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/5a/39/7408d005844e9ad2bc08ffe4c144c62db234ef3b449d61b21dc366275089/biz_dfch_asdste100rules-0.1.0.tar.gz", hash = "sha256:2b237d0feb6de2775cdad0935561426682bab878d919b3b19a228097004d7d36", size = 81171, upload-time = "2026-08-01T11:26:06.725Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/5a/61/2835408d2089f73436a9cc9d8c6314a3881a8fcf89e8d23b901c53e5238c/biz_dfch_asdste100rules-0.1.1.tar.gz", hash = "sha256:2626b5d0eb83cbb189a25c5759ecabe841547a055eb69730a5d94b2270f82a29", size = 81211, upload-time = "2026-08-01T15:19:29.968Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/32/bfae827353a0aac572bbc2023c85b54bcef97547908acb01712a73fb377d/biz_dfch_asdste100rules-0.1.0-py3-none-any.whl", hash = "sha256:b9dc7d3c3627b0839ec147b291b76b61e408a5902f5f27d00d025acff6d759ce", size = 95678, upload-time = "2026-08-01T11:26:05.607Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/34/51b5296a6c29ed1f41d732ffaaf6befa3a044f5045723554528fba4248f7/biz_dfch_asdste100rules-0.1.1-py3-none-any.whl", hash = "sha256:56ac0f1cb0e7852bfbf2d4ac23c99f4c4813b1a3d5a1d509e26e5b72c077f4f2", size = 95866, upload-time = "2026-08-01T15:19:28.483Z" },
 ]
 
 [[package]]
