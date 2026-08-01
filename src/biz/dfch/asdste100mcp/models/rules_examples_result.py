@@ -15,28 +15,30 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Pydantic model wrapping a paginated `rules_search` result."""
+"""Pydantic model wrapping a paginated `rules_examples` result."""
 
 from __future__ import annotations
 
 from pydantic import Field
 
-from biz.dfch.asdste100rules.models import Rule
+from biz.dfch.asdste100rules.models import ContentItem
 
 from .paged_result import PagedResult
 
 
-class SearchResult(PagedResult):
-    """A single page of a `rules_search` result, with pagination metadata.
+class RulesExamplesResult(PagedResult):
+    """A single page of a `rules_examples` result, with pagination metadata.
 
-    See `PagedResult` for the meaning of `total`, `offset`, `max_results`,
-    and `truncated`.
+    Unfiltered, `rules_examples` can return well over a thousand content
+    items across the whole ruleset, so pagination matters even though the
+    ruleset itself only holds a few dozen rules. See `PagedResult` for the
+    meaning of `total`, `offset`, `max_results`, and `truncated`.
 
     Parameters
     ----------
     results:
-        The page of matching rules, after ``offset``/``max_results`` have
-        been applied, in document order.
+        The page of matching content items, after ``offset``/``max_results``
+        have been applied, in document order.
     """
 
-    results: list[Rule] = Field(default_factory=list)
+    results: list[ContentItem] = Field(default_factory=list)

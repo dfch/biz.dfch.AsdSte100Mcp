@@ -15,30 +15,29 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Pydantic models mirroring the ASD-STE100 vocab dataclasses, plus small
-wrapper models for the ASD-STE100 rules tools.
+"""Pydantic model wrapping a paginated `word_list`/`word_match` result."""
 
-Usage::
+from __future__ import annotations
 
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
-"""
+from pydantic import Field
 
 from .paged_result import PagedResult
-from .rules_examples_result import RulesExamplesResult
-from .search_result import SearchResult
-from .toc_entry import TocEntry
 from .word import Word
-from .word_meaning import WordMeaning
-from .word_note import WordNote
-from .word_result import WordResult
 
-__all__ = [
-    "PagedResult",
-    "RulesExamplesResult",
-    "SearchResult",
-    "TocEntry",
-    "Word",
-    "WordMeaning",
-    "WordNote",
-    "WordResult",
-]
+
+class WordResult(PagedResult):
+    """A single page of a `word_list`/`word_match` result, with pagination metadata.
+
+    The vocabulary holds thousands of entries, and `word_list` always
+    returns every one of them unless paginated; `word_match` can match
+    just as many with a broad enough pattern. See `PagedResult` for the
+    meaning of `total`, `offset`, `max_results`, and `truncated`.
+
+    Parameters
+    ----------
+    results:
+        The page of matching vocabulary entries, after
+        ``offset``/``max_results`` have been applied.
+    """
+
+    results: list[Word] = Field(default_factory=list)

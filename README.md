@@ -19,9 +19,9 @@ An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard
 | Tool | Description |
 |---|---|
 | `word_find`  | Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `word_match` with a wildcard if this tool returns no items. |
-| `word_match` | Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$). |
+| `word_match` | Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$). Paginated (`max_results`/`offset`); returns a `WordResult`. |
 | `word_similar` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when `word_find` returns nothing and you want suggestions. |
-| `word_list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use `word_count` instead if you only need the total. This operation is expensive and returns a large number of text. |
+| `word_list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use `word_count` instead if you only need the total. Paginated (`max_results`/`offset`); returns a `WordResult`. |
 | `word_count` | Return the total number of entries in the vocabulary. Use instead of `word_list` when you only need the count. |
 
 ### Rules
@@ -30,10 +30,10 @@ An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard
 |---|---|
 | `rules_find` | Search for rules in the ruleset by exact id (case-insensitive), e.g. `R1.1` or `GR-8`. Use this first when you know the exact id. |
 | `rules_match` | Search rules using a regular expression matched against the rule `name` and `summary`. |
-| `rules_search` | Full-text search across every text a rule carries (section, category, name, summary, and all content blocks: text, notes, examples, technical noun/verb lists). Optionally restrict to specific content types. |
+| `rules_search` | Full-text search across every text a rule carries (section, category, name, summary, and all content blocks: text, notes, examples, technical noun/verb lists). Optionally restrict to specific content types. Paginated (`max_results`/`offset`); returns a `SearchResult`. |
 | `rules_by_section` | Search for rules by exact section name (case-insensitive), e.g. `Words`. |
 | `rules_by_category` | Search for rules by exact category name (case-insensitive), e.g. `Technical nouns`. |
-| `rules_examples` | Return content items across rules, optionally scoped by id/section/category and filtered by content type. |
+| `rules_examples` | Return content items across rules, optionally scoped by id/section/category and filtered by content type. Paginated (`max_results`/`offset`); returns a `RulesExamplesResult`. |
 | `rules_overview` | Return a lightweight, per-rule overview (id, type, section, category, name, optional summary, and content counts/flags) without shipping every content item. |
 | `rules_toc` | Return the distinct (section, category) pairs as a table-of-contents outline, optionally scoped to one section. |
 

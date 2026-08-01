@@ -10,18 +10,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - `max_results` (default 25) and `offset` (default 0) pagination parameters
-  on `rules_search`.
-- New `SearchResult` model (`src/biz/dfch/asdste100mcp/models/search_result.py`)
-  wrapping the paginated `rules_search` response with `results`, `total`,
-  `offset`, `max_results`, and `truncated` fields, so callers can tell
-  whether a full page means "that's all the matches" or "there are more
-  -- call again with a higher `offset`".
+  on `rules_search`, `rules_examples`, `word_list`, and `word_match` --
+  the four tools whose unpaginated result can grow large enough (over a
+  thousand items, for `rules_examples`; the full multi-thousand-entry
+  vocabulary, for `word_list`/`word_match`) that a full page is otherwise
+  ambiguous.
+- New `PagedResult` base model (`src/biz/dfch/asdste100mcp/models/paged_result.py`)
+  carrying the shared `total`, `offset`, `max_results`, and `truncated`
+  pagination fields, plus three tool-specific subclasses built on it:
+  `SearchResult` (`rules_search`, `results: list[Rule]`),
+  `RulesExamplesResult` (`rules_examples`, `results: list[ContentItem]`),
+  and `WordResult` (`word_list`/`word_match`, `results: list[Word]`).
+  `truncated` tells callers whether a full page means "that's all the
+  matches" or "there are more -- call again with a higher `offset`".
+- `src/biz/dfch/asdste100mcp/tools/_pagination.py` -- shared `MaxResults`/
+  `Offset` parameter types and a `paginate()` slicing helper used by all
+  four paginated tools.
 
 ### Changed
 
 - **Breaking**: `rules_search` now returns a `SearchResult` object instead
   of a bare `list[Rule]`; the page of matching rules is available at
   `result.results`.
+- **Breaking**: `rules_examples` now returns a `RulesExamplesResult`
+  object instead of a bare `list[ContentItem]`; the page of matching
+  content items is available at `result.results`.
+- **Breaking**: `word_list` and `word_match` now return a `WordResult`
+  object instead of a bare `list[Word]`; the page of matching vocabulary
+  entries is available at `result.results`.
 
 ## [0.2.0] - 2026-08-01
 

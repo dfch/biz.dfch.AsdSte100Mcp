@@ -19,25 +19,43 @@
 
 from __future__ import annotations
 
-from ...models import Word
+from ...models import Word, WordResult
 from ...server import _READ_ONLY, _get_vocab, mcp
+from .._pagination import MaxResults, Offset, paginate
 
 
 @mcp.tool(annotations=_READ_ONLY)
-def word_list() -> list[Word]:
+def word_list(max_results: MaxResults = 25, offset: Offset = 0) -> WordResult:
     """
     Return all vocabulary entries.
 
     Only use when you need to process the full vocabulary. Use word_count
     instead if you only need the total. This operation is expensive and returns
-    a large number of text.
+    a large number of entries -- the vocabulary holds thousands of them.
+
+    Parameters
+    ----------
+    max_results:
+        The maximum number of vocabulary entries to return (default 25).
+    offset:
+        The number of vocabulary entries to skip before returning results,
+        for pagination (default 0).
 
     Returns
     -------
-    list[Word]
-        All vocabulary entries.
+    WordResult
+        ``results`` holds the (possibly empty) page of vocabulary entries
+        after applying ``offset`` and ``max_results``. ``total`` is the
+        full entry count before pagination, and ``truncated`` tells the
+        caller whether more entries exist beyond this page.
     """
 
-    words = _get_vocab().as_dict()
-    result = [Word.model_validate(w) for w in words]
-    return result
+    words = [Word.model_validate(w) for w in _get_vocab().as_dict()]
+    page, total, truncated = paginate(words, offset, max_results)
+    return WordResult(
+        results=page,
+        total=total,
+        offset=offset,
+        max_results=max_results,
+        truncated=truncated,
+    )

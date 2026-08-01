@@ -15,30 +15,20 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Pydantic models mirroring the ASD-STE100 vocab dataclasses, plus small
-wrapper models for the ASD-STE100 rules tools.
+"""Tests for the PagedResult Pydantic base model."""
 
-Usage::
+import unittest
 
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
-"""
+from biz.dfch.asdste100mcp.models import PagedResult
 
-from .paged_result import PagedResult
-from .rules_examples_result import RulesExamplesResult
-from .search_result import SearchResult
-from .toc_entry import TocEntry
-from .word import Word
-from .word_meaning import WordMeaning
-from .word_note import WordNote
-from .word_result import WordResult
 
-__all__ = [
-    "PagedResult",
-    "RulesExamplesResult",
-    "SearchResult",
-    "TocEntry",
-    "Word",
-    "WordMeaning",
-    "WordNote",
-    "WordResult",
-]
+class TestPagedResult(unittest.TestCase):
+    """Tests for the PagedResult Pydantic base model."""
+
+    def test_paged_result_holds_fields(self):
+        """A PagedResult must store all given fields as-is."""
+        paged = PagedResult(total=3, offset=1, max_results=1, truncated=True)
+        self.assertEqual(paged.total, 3)
+        self.assertEqual(paged.offset, 1)
+        self.assertEqual(paged.max_results, 1)
+        self.assertTrue(paged.truncated)

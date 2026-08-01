@@ -21,7 +21,8 @@ from __future__ import annotations
 
 from ...models import SearchResult
 from ...server import _READ_ONLY, _get_rules, mcp
-from ._params import ContentTypes, MaxResults, Offset, SearchPattern
+from .._pagination import MaxResults, Offset, paginate
+from ._params import ContentTypes, SearchPattern
 
 
 @mcp.tool(annotations=_READ_ONLY)
@@ -69,12 +70,11 @@ def rules_search(
     """
 
     matches = _get_rules().search(pattern, content_types=content_types)
-    page = matches[offset : offset + max_results]
-    total = len(matches)
+    page, total, truncated = paginate(matches, offset, max_results)
     return SearchResult(
         results=page,
         total=total,
         offset=offset,
         max_results=max_results,
-        truncated=total > offset + len(page),
+        truncated=truncated,
     )

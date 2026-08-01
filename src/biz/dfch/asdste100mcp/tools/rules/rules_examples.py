@@ -19,9 +19,9 @@
 
 from __future__ import annotations
 
-from biz.dfch.asdste100rules.models import ContentItem
-
+from ...models import RulesExamplesResult
 from ...server import _READ_ONLY, _get_rules, mcp
+from .._pagination import MaxResults, Offset, paginate
 from ._params import Kind, OptionalCategory, OptionalId, OptionalSection
 
 
@@ -31,7 +31,9 @@ def rules_examples(
     section: OptionalSection = None,
     category: OptionalCategory = None,
     kind: Kind = None,
-) -> list[ContentItem]:
+    max_results: MaxResults = 25,
+    offset: Offset = 0,
+) -> RulesExamplesResult:
     """
     Return content items across rules, optionally scoped and filtered.
 
@@ -49,12 +51,31 @@ def rules_examples(
     kind:
         When given, only return content items of this type (e.g.
         ``"ste_example"``).
+    max_results:
+        The maximum number of matching content items to return (default 25).
+    offset:
+        The number of matching content items to skip before returning
+        results, for pagination (default 0).
 
     Returns
     -------
-    list[ContentItem]
-        A (possibly empty) list of matching content items, in document
-        order.
+    RulesExamplesResult
+        ``results`` holds the (possibly empty) page of matching content
+        items, in document order, after applying ``offset`` and
+        ``max_results``. ``total`` is the full match count before
+        pagination, and ``truncated`` tells the caller whether more
+        content items exist beyond this page. Unfiltered, the ruleset
+        can hold well over a thousand content items, so pagination
+        matters here even though the ruleset itself only has a few
+        dozen rules.
     """
 
-    return _get_rules().examples(id_=id_, section=section, category=category, kind=kind)
+    matches = _get_rules().examples(id_=id_, section=section, category=category, kind=kind)
+    page, total, truncated = paginate(matches, offset, max_results)
+    return RulesExamplesResult(
+        results=page,
+        total=total,
+        offset=offset,
+        max_results=max_results,
+        truncated=truncated,
+    )
