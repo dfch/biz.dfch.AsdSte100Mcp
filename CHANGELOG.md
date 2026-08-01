@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-08-01
+
 ### Added
 
 - Eight `rules_*` read-only tools backed by the `biz-dfch-asdste100rules` library:
@@ -24,6 +26,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   directly, following the existing tool-test convention).
 - `tests/models/test_toc_entry.py` — unit tests for the new `TocEntry` model.
 - Python 3.14 to the list of supported and CI-tested versions.
+
+### Changed
+
+- Renamed the five vocabulary tools with a `word_` prefix and moved them
+  into a new `tools/words/` sub-package: `word_find`, `word_match`,
+  `word_similar`, `word_list`, `word_count` (was `find`, `match`,
+  `similar`, `list`, `count`). **Breaking**: any caller invoking the
+  tools by their previous names must switch to the new `word_*` names.
 
 ## [0.1.3] - 2026-07-30
 
@@ -131,8 +141,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed `main.py` scaffold placeholder; the real entry point is `cli.py`.
 
+[0.2.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.2...v0.1.3
-[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.3...HEAD
+[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.2.0...HEAD
 [0.1.2]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/9c36e28...v0.1.0
