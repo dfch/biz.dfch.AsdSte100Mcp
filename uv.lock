@@ -79,6 +79,7 @@ name = "biz-dfch-asdste100mcp"
 version = "0.1.3"
 source = { editable = "." }
 dependencies = [
+    { name = "biz-dfch-asdste100rules" },
     { name = "biz-dfch-asdste100vocab" },
     { name = "mcp" },
     { name = "pydantic-settings" },
@@ -110,6 +111,7 @@ test = [
 [package.metadata]
 requires-dist = [
     { name = "biz-dfch-asdste100mcp", extras = ["test"], marker = "extra == 'dev'" },
+    { name = "biz-dfch-asdste100rules", specifier = ">=0.1.0" },
     { name = "biz-dfch-asdste100vocab", specifier = ">=0.8.0" },
     { name = "build", marker = "extra == 'dev'" },
     { name = "coverage", marker = "extra == 'test'" },
@@ -118,7 +120,6 @@ requires-dist = [
     { name = "parameterized", marker = "extra == 'test'", specifier = ">=0.9.0" },
     { name = "pydantic-settings", specifier = ">=2.14.2" },
     { name = "pyinstaller", marker = "extra == 'build'", specifier = ">=6.20.0" },
-    { name = "pylint", marker = "extra == 'dev'" },
     { name = "pylint", marker = "extra == 'test'", specifier = ">=4.0.0" },
     { name = "python-dotenv", specifier = ">=1.2.2" },
     { name = "rich", marker = "extra == 'build'" },
@@ -128,6 +129,20 @@ requires-dist = [
     { name = "uv", marker = "extra == 'dev'" },
 ]
 provides-extras = ["test", "dev", "build"]
+
+[[package]]
+name = "biz-dfch-asdste100rules"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pydantic" },
+    { name = "python-dotenv" },
+    { name = "typer" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/5a/39/7408d005844e9ad2bc08ffe4c144c62db234ef3b449d61b21dc366275089/biz_dfch_asdste100rules-0.1.0.tar.gz", hash = "sha256:2b237d0feb6de2775cdad0935561426682bab878d919b3b19a228097004d7d36", size = 81171, upload-time = "2026-08-01T11:26:06.725Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d4/32/bfae827353a0aac572bbc2023c85b54bcef97547908acb01712a73fb377d/biz_dfch_asdste100rules-0.1.0-py3-none-any.whl", hash = "sha256:b9dc7d3c3627b0839ec147b291b76b61e408a5902f5f27d00d025acff6d759ce", size = 95678, upload-time = "2026-08-01T11:26:05.607Z" },
+]
 
 [[package]]
 name = "biz-dfch-asdste100vocab"
@@ -600,7 +615,7 @@ name = "importlib-metadata"
 version = "9.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "python_full_version < '3.12'" },
+    { name = "zipp" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a9/01/15bb152d77b21318514a96f43af312635eb2500c96b55398d020c93d86ea/importlib_metadata-9.0.0.tar.gz", hash = "sha256:a4f57ab599e6a2e3016d7595cfd72eb4661a5106e787a95bcc90c7105b831efc", size = 56405, upload-time = "2026-03-20T06:42:56.999Z" }
 wheels = [
