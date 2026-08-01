@@ -15,27 +15,24 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tests for the find tool."""
+"""Tool: word_count — return the total number of entries in the ASD-STE100 Issue 9 vocabulary."""
 
-import unittest
+from __future__ import annotations
 
-from biz.dfch.asdste100vocab import Vocab
+from ...server import _READ_ONLY, _get_vocab, mcp
 
 
-class TestFind(unittest.TestCase):
-    """Tests for the find tool."""
+@mcp.tool(annotations=_READ_ONLY)
+def word_count() -> int:
+    """
+    Return the total number of entries in the vocabulary.
 
-    def setUp(self):
-        self.vocab = Vocab()
+    Use instead of `word_list` when you only need the count.
 
-    def test_find_known_word_returns_results(self):
-        """Finding a known STE100 word must return at least one entry."""
-        result = self.vocab.find("use")
-        self.assertIsInstance(result, list)
-        self.assertGreater(len(result), 0)
+    Returns
+    -------
+    int
+        The number of entries in the vocabulary.
+    """
 
-    def test_find_unknown_word_returns_empty_list(self):
-        """Finding a word that does not exist must return an empty list."""
-        result = self.vocab.find("zzznonsense")
-        self.assertIsInstance(result, list)
-        self.assertEqual(len(result), 0)
+    return len(_get_vocab())

@@ -15,18 +15,18 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tool: match — regular-expression search in the ASD-STE100 Issue 9 vocabulary."""
+"""Tool: word_match — regular-expression search in the ASD-STE100 Issue 9 vocabulary."""
 
 from __future__ import annotations
 
 from biz.dfch.asdste100vocab import Vocab
 
-from ..models import Word
-from ..server import _READ_ONLY, _Term, _get_vocab, mcp
+from ...models import Word
+from ...server import _READ_ONLY, _Term, _get_vocab, mcp
 
 
 @mcp.tool(annotations=_READ_ONLY)
-def match(term: _Term) -> list[Word]:
+def word_match(term: _Term) -> list[Word]:
     """
     Search the vocabulary using a regular expression pattern.
 

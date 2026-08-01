@@ -15,38 +15,29 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tool: find — exact-match search in the ASD-STE100 Issue 9 vocabulary."""
+"""Tool: word_list — return the full ASD-STE100 Issue 9 vocabulary."""
 
 from __future__ import annotations
 
-from biz.dfch.asdste100vocab import Vocab
-
-from ..models import Word
-from ..server import _READ_ONLY, _Term, _get_vocab, mcp
+from ...models import Word
+from ...server import _READ_ONLY, _get_vocab, mcp
 
 
 @mcp.tool(annotations=_READ_ONLY)
-def find(term: _Term) -> list[Word]:
+def word_list() -> list[Word]:
     """
-    Search for a term by exact name (case-insensitive) in the ASD-STE100
-    Issue 9 vocabulary.
+    Return all vocabulary entries.
 
-    Return approved/rejected status, part of speech,
-    STE examples, and approved alternatives. Use this first when you know
-    the exact word. Use `asdste100_match` with a wildcard if this tool
-    returns no items.
-
-    Parameters
-    ----------
-    term:
-        The word or phrase to look up exactly.
+    Only use when you need to process the full vocabulary. Use word_count
+    instead if you only need the total. This operation is expensive and returns
+    a large number of text.
 
     Returns
     -------
     list[Word]
-        A (possibly empty) list of matching vocabulary entries.
+        All vocabulary entries.
     """
 
-    words = _get_vocab().find(term)
-    result = [Word.model_validate(Vocab._word_to_dict(w)) for w in words]  # pylint: disable=protected-access
+    words = _get_vocab().as_dict()
+    result = [Word.model_validate(w) for w in words]
     return result

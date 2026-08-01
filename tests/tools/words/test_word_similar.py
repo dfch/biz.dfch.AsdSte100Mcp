@@ -15,27 +15,26 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tests for the match tool."""
+"""Tests for the word_similar tool."""
 
 import unittest
 
 from biz.dfch.asdste100vocab import Vocab
 
 
-class TestMatch(unittest.TestCase):
-    """Tests for the match tool."""
+class TestWordSimilar(unittest.TestCase):
+    """Tests for the word_similar tool."""
 
     def setUp(self):
         self.vocab = Vocab()
 
-    def test_match_pattern_returns_results(self):
-        """A regex pattern matching known words must return results."""
-        result = self.vocab.match("use.*")
+    def test_similar_returns_results(self):
+        """A fuzzy lookup for a known word must return at least one entry."""
+        result = self.vocab.similar("use")
         self.assertIsInstance(result, list)
         self.assertGreater(len(result), 0)
 
-    def test_match_non_matching_pattern_returns_empty_list(self):
-        """A regex pattern that matches nothing must return an empty list."""
-        result = self.vocab.match("zzznonsense.*")
+    def test_similar_returns_list_for_unknown_word(self):
+        """A fuzzy lookup for a nonsense word must return a list (possibly empty)."""
+        result = self.vocab.similar("zzznonsense")
         self.assertIsInstance(result, list)
-        self.assertEqual(len(result), 0)

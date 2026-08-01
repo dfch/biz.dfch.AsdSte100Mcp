@@ -15,21 +15,27 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tests for the count tool."""
+"""Tests for the word_find tool."""
 
 import unittest
 
 from biz.dfch.asdste100vocab import Vocab
 
 
-class TestCount(unittest.TestCase):
-    """Tests for the count tool."""
+class TestWordFind(unittest.TestCase):
+    """Tests for the word_find tool."""
 
     def setUp(self):
         self.vocab = Vocab()
 
-    def test_count_returns_positive_integer(self):
-        """The vocabulary must contain at least one entry."""
-        result = len(self.vocab)
-        self.assertIsInstance(result, int)
-        self.assertGreater(result, 0)
+    def test_find_known_word_returns_results(self):
+        """Finding a known STE100 word must return at least one entry."""
+        result = self.vocab.find("use")
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
+
+    def test_find_unknown_word_returns_empty_list(self):
+        """Finding a word that does not exist must return an empty list."""
+        result = self.vocab.find("zzznonsense")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 0)

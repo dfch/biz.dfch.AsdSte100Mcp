@@ -14,25 +14,3 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
-
-"""Tool: count — return the total number of entries in the ASD-STE100 Issue 9 vocabulary."""
-
-from __future__ import annotations
-
-from ..server import _READ_ONLY, _get_vocab, mcp
-
-
-@mcp.tool(name="count", annotations=_READ_ONLY)
-def count_vocab() -> int:
-    """
-    Return the total number of entries in the vocabulary.
-
-    Use instead of `asdste100_list` when you only need the count.
-
-    Returns
-    -------
-    int
-        The number of entries in the vocabulary.
-    """
-
-    return len(_get_vocab())

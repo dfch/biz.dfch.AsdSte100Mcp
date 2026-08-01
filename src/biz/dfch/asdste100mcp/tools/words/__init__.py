@@ -15,26 +15,21 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tests for the similar tool."""
+"""MCP tool registrations for the ASD-STE100 Issue 9 vocabulary.
 
-import unittest
+Each sub-module registers one ``word_*`` tool against the shared ``mcp``
+application instance.  Import this package to load all vocabulary tools
+at once::
 
-from biz.dfch.asdste100vocab import Vocab
+    from biz.dfch.asdste100mcp.tools import words  # noqa: F401 (side-effects only)
+"""
 
+from . import word_count, word_find, word_list, word_match, word_similar  # noqa: F401
 
-class TestSimilar(unittest.TestCase):
-    """Tests for the similar tool."""
-
-    def setUp(self):
-        self.vocab = Vocab()
-
-    def test_similar_returns_results(self):
-        """A fuzzy lookup for a known word must return at least one entry."""
-        result = self.vocab.similar("use")
-        self.assertIsInstance(result, list)
-        self.assertGreater(len(result), 0)
-
-    def test_similar_returns_list_for_unknown_word(self):
-        """A fuzzy lookup for a nonsense word must return a list (possibly empty)."""
-        result = self.vocab.similar("zzznonsense")
-        self.assertIsInstance(result, list)
+__all__ = [
+    "word_count",
+    "word_find",
+    "word_list",
+    "word_match",
+    "word_similar",
+]

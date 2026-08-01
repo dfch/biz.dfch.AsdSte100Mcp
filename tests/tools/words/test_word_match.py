@@ -15,29 +15,27 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tool: list — return the full ASD-STE100 Issue 9 vocabulary."""
+"""Tests for the word_match tool."""
 
-from __future__ import annotations
+import unittest
 
-from ..models import Word
-from ..server import _READ_ONLY, _get_vocab, mcp
+from biz.dfch.asdste100vocab import Vocab
 
 
-@mcp.tool(name="list", annotations=_READ_ONLY)
-def list_vocab() -> list[Word]:
-    """
-    Return all vocabulary entries.
+class TestWordMatch(unittest.TestCase):
+    """Tests for the word_match tool."""
 
-    Only use when you need to process the full vocabulary. Use asdste100_count
-    instead if you only need the total. This operation is expensive and returns
-    a large number of text.
+    def setUp(self):
+        self.vocab = Vocab()
 
-    Returns
-    -------
-    list[Word]
-        All vocabulary entries.
-    """
+    def test_match_pattern_returns_results(self):
+        """A regex pattern matching known words must return results."""
+        result = self.vocab.match("use.*")
+        self.assertIsInstance(result, list)
+        self.assertGreater(len(result), 0)
 
-    words = _get_vocab().as_dict()
-    result = [Word.model_validate(w) for w in words]
-    return result
+    def test_match_non_matching_pattern_returns_empty_list(self):
+        """A regex pattern that matches nothing must return an empty list."""
+        result = self.vocab.match("zzznonsense.*")
+        self.assertIsInstance(result, list)
+        self.assertEqual(len(result), 0)
