@@ -9,7 +9,7 @@
 [![TestPyPI version](https://img.shields.io/badge/dynamic/json?url=https://test.pypi.org/pypi/biz-dfch-asdste100mcp/json&label=TestPyPI&query=$.info.version&color=orange)](https://test.pypi.org/project/biz-dfch-asdste100mcp/)
 [![PyPI version](https://img.shields.io/badge/dynamic/json?url=https://www.pypi.org/pypi/biz-dfch-asdste100mcp/json&label=PyPI&query=$.info.version&color=blue)](https://www.pypi.org/project/biz-dfch-asdste100mcp/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/biz-dfch-asdste100mcp.svg)](https://pypistats.org/packages/biz-dfch-asdste100mcp)
-[![MCP](https://img.shields.io/badge/MCP-Model_Context_Protocol-8A2BE2.svg)](https://modelcontextprotocol.io/)
+[![MCP Registry](https://img.shields.io/badge/MCP_Registry-io.github.dfch%2Fbiz--dfch--asdste100mcp-8A2BE2.svg)](https://registry.modelcontextprotocol.io/?q=io.github.dfch/biz-dfch-asdste100mcp)
 [![Auth: none](https://img.shields.io/badge/auth-none-brightgreen.svg)](#authentication)
 
 An MCP server for the [ASD-STE100 (Simplified Technical English) Issue 9 standard](https://www.asd-ste100.org/).
