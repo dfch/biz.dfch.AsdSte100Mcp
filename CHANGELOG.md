@@ -29,6 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Breaking**: Renamed the `word_similar` vocabulary tool to `word_fuzzy` for clarity
   (`tools/words/word_similar.py` → `tools/words/word_fuzzy.py`). Any caller invoking the
   tool by its previous name must switch to `word_fuzzy`.
+- **Breaking**: Renamed the console script entry point from `ste100-mcp` to
+  `asdste100-mcp` (`[project.scripts]` in `pyproject.toml`), and the MCP
+  server/Typer app name to match. Update any launch command, OpenCode
+  `mcp` config, or shell alias that invokes `ste100-mcp` to use
+  `asdste100-mcp` instead.
 
 
 ## [1.0.0] - 2026-08-01

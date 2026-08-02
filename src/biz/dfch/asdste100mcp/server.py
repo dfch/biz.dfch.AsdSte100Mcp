@@ -110,7 +110,7 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
 # ---------------------------------------------------------------------------
 
 mcp = MCPServer(
-    name="ste100-mcp",
+    name="asdste100-mcp",
     instructions="Search ASD-STE100 Issue 9 vocabulary and rules entries.",
     lifespan=_lifespan,
 )

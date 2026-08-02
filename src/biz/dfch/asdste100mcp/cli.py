@@ -51,14 +51,14 @@ The server can be started in two transport modes:
   suitable for OpenCode and other MCP hosts that launch the server
   as a subprocess::
 
-      ste100-mcp
-      uv run ste100-mcp
+      asdste100-mcp
+      uv run asdste100-mcp
       python -m biz.dfch.asdste100mcp
 
 * **SSE / network** — the server binds a TCP port and accepts HTTP
   connections; suitable for cloud deployments::
 
-      ste100-mcp --transport sse --host localhost --port 8000
+      asdste100-mcp --transport sse --host localhost --port 8000
 
 Environment variables (all optional, CLI flags take precedence):
 
@@ -106,7 +106,7 @@ _load_default_dotenv()
 # ---------------------------------------------------------------------------
 
 app = typer.Typer(
-    name="ste100-mcp",
+    name="asdste100-mcp",
     help="ASD-STE100 Issue 9 MCP server.",
     no_args_is_help=False,
     add_completion=False,
@@ -125,7 +125,7 @@ def _warn_on_public_binding(host: str) -> None:
     )
     if not in_container:
         sys.stderr.write(
-            f"WARNING: binding ste100-mcp to '{host}' outside a container "
+            f"WARNING: binding asdste100-mcp to '{host}' outside a container "
             "exposes it to the local network. Use --host localhost for "
             "local development.\n"
         )

@@ -60,13 +60,13 @@ uv add biz-dfch-asdste100mcp
 ### stdio (Claude Desktop, OpenCode, and other MCP hosts)
 
 ```bash
-ste100-mcp
+asdste100-mcp
 ```
 
 ### SSE / network
 
 ```bash
-ste100-mcp --transport sse --host localhost --port 8000
+asdste100-mcp --transport sse --host localhost --port 8000
 ```
 
 ### Options
@@ -110,7 +110,7 @@ To add the ASD-STE100 (Simplified Technical English) MCP server to your OpenCode
 "asdste100": {
   "type": "local",
   "enabled": true,
-  "command": ["uvx", "--from", "biz-dfch-asdste100mcp", "ste100-mcp"]
+  "command": ["uvx", "--from", "biz-dfch-asdste100mcp", "asdste100-mcp"]
 }
 ```
 

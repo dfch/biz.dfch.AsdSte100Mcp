@@ -6,7 +6,7 @@ Quick reference for OpenCode agents working on **biz.dfch.AsdSte100Mcp** — an 
 
 - **Type**: Python package + MCP server
 - **Namespace**: `biz.dfch.asdste100mcp` (located in `src/biz/dfch/asdste100mcp/`)
-- **Entry point**: `ste100-mcp` CLI command (defined in `pyproject.toml:96`)
+- **Entry point**: `asdste100-mcp` CLI command (defined in `pyproject.toml:96`)
 - **License**: AGPL-3.0-or-later
 - **Python**: `requires-python = ">=3.11"` (3.11–3.13 tested in CI); local dev
   defaults to 3.13 via `.python-version` — these are two separate settings,
@@ -38,22 +38,22 @@ uv sync --all-extras
 
 ### Run the MCP server locally (stdio mode)
 ```bash
-uv run --frozen ste100-mcp
+uv run --frozen asdste100-mcp
 ```
 
 ### Run the MCP server with extra vocabulary files
 ```bash
-uv run --frozen ste100-mcp --file /path/to/custom.jsonl --file /path/to/extra.jsonl
+uv run --frozen asdste100-mcp --file /path/to/custom.jsonl --file /path/to/extra.jsonl
 ```
 
 ### Run the MCP server with extra rules files
 ```bash
-uv run --frozen ste100-mcp --rules-file /path/to/custom_rules.json
+uv run --frozen asdste100-mcp --rules-file /path/to/custom_rules.json
 ```
 
 ### Run the MCP server in SSE/network mode (development only)
 ```bash
-uv run --frozen ste100-mcp --transport sse --host localhost --port 8000
+uv run --frozen asdste100-mcp --transport sse --host localhost --port 8000
 ```
 
 ## Key Architecture
@@ -162,5 +162,5 @@ an instance. Tests that call `create_instance()` must reset it in
 
 ## Entry Points
 
-- **CLI command**: `ste100-mcp` (typer CLI app defined in `cli.py`)
+- **CLI command**: `asdste100-mcp` (typer CLI app defined in `cli.py`)
 - **Module entry**: `python -m biz.dfch.asdste100mcp` (runs `__main__.py`, which invokes `cli.app()`)

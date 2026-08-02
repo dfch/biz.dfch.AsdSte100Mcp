@@ -92,7 +92,7 @@ Changelog = "https://github.com/dfch/biz.dfch.AsdSte100Mcp/blob/main/CHANGELOG.m
 Issues = "https://github.com/dfch/biz.dfch.AsdSte100Mcp/issues"
 
 [project.scripts]
-ste100-mcp = "biz.dfch.asdste100mcp.cli:app"
+asdste100-mcp = "biz.dfch.asdste100mcp.cli:app"
 
 [tool.ruff]
 line-length = 120
