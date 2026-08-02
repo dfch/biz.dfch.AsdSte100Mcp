@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- MCP resource support, in addition to tools:
+  - `asdste100://rules/toc` — table-of-contents outline of the ruleset (mirrors
+    the `rules_toc` tool with no `section` filter).
+  - `asdste100://rules/rule/{id_}` — a single rule/recommendation/information
+    item by exact id, e.g. `asdste100://rules/rule/R1.1` (mirrors the
+    `rules_find` tool).
+  - New `resources/` package (mirroring the existing `tools/` package
+    structure), with a `rules/` sub-package for the rules resources;
+    registered in `server.py` alongside the existing `tools` import.
+  - `tests/resources/rules/` — unit tests for both resource functions.
+
 ## [2.0.0] - 2026-08-02
 
 ### Added

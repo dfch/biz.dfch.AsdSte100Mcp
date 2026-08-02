@@ -21,6 +21,7 @@ I am in no way affiliated with ASD. ASD does not endorse my work.
 ## Table of Contents
 
 - [Tools](#tools)
+- [Resources](#resources)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Authentication](#authentication)
@@ -64,6 +65,16 @@ rather than expecting the server to authenticate requests itself.
 | `rules_examples` | Return content items across rules, optionally scoped by id/section/category and filtered by content type. Paginated (`max_results`/`offset`); returns a `RulesExamplesResult`. |
 | `rules_overview` | Return a lightweight, per-rule overview (id, type, section, category, name, optional summary, and content counts/flags) without shipping every content item. |
 | `rules_toc` | Return the distinct (section, category) pairs as a table-of-contents outline, optionally scoped to one section. |
+
+## Resources
+
+Read-only resources let a client browse or attach ruleset data directly (e.g. via
+an "@mention" or resource picker), without going through a tool call.
+
+| Resource URI | Description |
+|---|---|
+| `asdste100://rules/toc` | Table-of-contents outline of the ruleset: the distinct (section, category) pairs, each with the ids they contain. Mirrors the `rules_toc` tool with no `section` filter. |
+| `asdste100://rules/rule/{id_}` | A single rule/recommendation/information item by exact id (case-insensitive), e.g. `asdste100://rules/rule/R1.1`. Mirrors the `rules_find` tool; an unknown id resolves to an empty list rather than an error. |
 
 ## Installation
 

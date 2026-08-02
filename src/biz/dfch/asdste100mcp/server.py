@@ -38,6 +38,11 @@ rules_by_category -- Search for rules by exact category name.
 rules_examples    -- Return content items across rules, optionally scoped and filtered. Paginated (`max_results`/`offset`); returns a `RulesExamplesResult`.
 rules_overview    -- Return a lightweight, per-rule overview of the ruleset.
 rules_toc         -- Return the distinct (section, category) pairs as a table-of-contents outline.
+
+Resources
+---------
+asdste100://rules/toc          -- Table-of-contents outline of the ruleset (mirrors `rules_toc`).
+asdste100://rules/rule/{id_}   -- A single rule/recommendation/information item by exact id (mirrors `rules_find`).
 """  # noqa: E501
 
 from __future__ import annotations
@@ -140,7 +145,8 @@ _READ_ONLY = ToolAnnotations(
 _Term = Annotated[str, Field(min_length=1, max_length=200, description="The term to look up.")]
 
 # ---------------------------------------------------------------------------
-# Tool registration (side-effects: registers all tools on mcp).
+# Tool and resource registration (side-effects: registers all tools and
+# resources on mcp).
 # ---------------------------------------------------------------------------
 
-from . import tools  # noqa: E402, F401
+from . import resources, tools  # noqa: E402, F401
