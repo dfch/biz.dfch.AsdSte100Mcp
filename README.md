@@ -1,5 +1,7 @@
 # biz.dfch.AsdSte100Mcp
 
+<!-- mcp-name: io.github.dfch/biz-dfch-asdste100mcp -->
+
 [![ASD-STE100: Issue 9](https://img.shields.io/badge/ASD--STE100-Issue%209-blue.svg)](https://www.asd-ste100.org/)
 [![License: AGPL v3](https://img.shields.io/badge/License-AGPLv3-blue.svg)](https://www.gnu.org/licenses/agpl-3.0)
 ![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13%20%7C%203.14-blue.svg)
@@ -184,7 +186,8 @@ Pushing the tag triggers the `publish.yml` workflow, which will:
 1. Build the sdist and wheel.
 2. Publish to **TestPyPI** (environment `testpypi`).
 3. Publish to **PyPI** (environment `pypi`), only if TestPyPI succeeded.
-4. Create a **GitHub Release** with auto-generated notes and the distribution artifacts attached.
+4. Publish to the **MCP Registry** (`publish-to-mcp-registry` job) — requires the new version to be live on PyPI first.
+5. Create a **GitHub Release** with auto-generated notes and the distribution artifacts attached.
 
 Then switch back to `dev` to continue work:
 
@@ -228,6 +231,16 @@ Log in at [pypi.org](https://pypi.org) → **Your account** → **Publishing** �
 | Repository | `biz.dfch.AsdSte100Mcp` |
 | Workflow name | `publish.yml` |
 | Environment | `pypi` |
+
+### MCP Registry Publishing
+
+The `publish-to-mcp-registry` job uses GitHub OIDC authentication and does not require additional setup — it will automatically publish to the [official MCP Registry](https://registry.modelcontextprotocol.io/) once the package is live on PyPI.
+
+Verify your server is registered:
+
+```bash
+curl "https://registry.modelcontextprotocol.io/v0.1/servers?search=io.github.dfch/biz-dfch-asdste100mcp"
+```
 
 ## License
 

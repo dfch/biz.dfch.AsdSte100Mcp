@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- MCP Registry publishing support via new `publish-to-mcp-registry` GitHub Actions job:
+  - Automatically publishes server metadata to the [official MCP Registry](https://registry.modelcontextprotocol.io/)
+  - Uses GitHub OIDC authentication (zero secrets, consistent with PyPI Trusted Publishing)
+  - Auto-patches `server.json` version fields from git tag at publish time
+  - Runs after PyPI publication succeeds in the CI workflow
+- `server.json` at repository root defining MCP Registry metadata:
+  - Server identity: `io.github.dfch/biz-dfch-asdste100mcp` (GitHub OIDC namespace)
+  - PyPI package configuration with `biz-dfch-asdste100mcp` identifier
+  - Documentation of all 8 `STE100_MCP_*` environment variables with format hints
+  - Conforms to MCP Registry schema v2025-12-11
+- PyPI ownership verification marker in README.md long-description for registry discovery
+
+### Changed
+
+- Updated release workflow documentation in README.md to include MCP Registry publishing step
+- Added "MCP Registry Publishing" section in README.md with setup and verification instructions
+
 ## [1.0.0] - 2026-08-01
 
 ### Added

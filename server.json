@@ -1,0 +1,71 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.dfch/biz-dfch-asdste100mcp",
+  "title": "ASD-STE100 Simplified Technical English",
+  "description": "An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard.",
+  "repository": {
+    "url": "https://github.com/dfch/biz.dfch.AsdSte100Mcp",
+    "source": "github"
+  },
+  "version": "0.0.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "biz-dfch-asdste100mcp",
+      "version": "0.0.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "environmentVariables": [
+        {
+          "name": "STE100_MCP_TRANSPORT",
+          "description": "Transport mode: stdio or sse",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "STE100_MCP_HOST",
+          "description": "Bind address (SSE transport only)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "STE100_MCP_PORT",
+          "description": "TCP port (SSE transport only)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "STE100_MCP_FILES",
+          "description": "Colon-separated paths to additional vocabulary .jsonl files",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "STE100_MCP_USE_STE100",
+          "description": "Load the built-in ASD-STE100 Issue 9 vocabulary",
+          "isRequired": false,
+          "format": "boolean"
+        },
+        {
+          "name": "STE100_MCP_USE_STE100_TECHNICAL_WORDS",
+          "description": "Also load the technical words vocabulary",
+          "isRequired": false,
+          "format": "boolean"
+        },
+        {
+          "name": "STE100_MCP_RULES_FILES",
+          "description": "Colon-separated paths to additional rules files (JSON array each)",
+          "isRequired": false,
+          "format": "string"
+        },
+        {
+          "name": "STE100_MCP_USE_STE100_RULES",
+          "description": "Load the built-in ASD-STE100 Issue 9 ruleset",
+          "isRequired": false,
+          "format": "boolean"
+        }
+      ]
+    }
+  ]
+}
