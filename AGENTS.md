@@ -8,7 +8,7 @@ Quick reference for OpenCode agents working on **biz.dfch.AsdSte100Mcp** — an 
 - **Namespace**: `biz.dfch.asdste100mcp` (located in `src/biz/dfch/asdste100mcp/`)
 - **Entry point**: `ste100-mcp` CLI command (defined in `pyproject.toml:96`)
 - **License**: AGPL-3.0-or-later
-- **Python**: `requires-python = ">=3.11"` (3.11–3.14 tested in CI); local dev
+- **Python**: `requires-python = ">=3.11"` (3.11–3.13 tested in CI); local dev
   defaults to 3.13 via `.python-version` — these are two separate settings,
   keep them in sync intentionally, not by accident
 - **Package manager**: `uv` (not pip)
@@ -114,7 +114,7 @@ an instance. Tests that call `create_instance()` must reset it in
 - **Test layout**: `tests/` mirrors `src/` structure (`tests/models/`, `tests/settings/`, `tests/tools/`)
   including the `tools/words/` and `tools/rules/` sub-packages
 - **Discovery**: `python -m unittest discover` (required pattern: `test_*.py`)
-- **CI**: `.github/workflows/ci.yml` runs tests on Python 3.11, 3.12, 3.13, 3.14
+- **CI**: `.github/workflows/ci.yml` runs tests on Python 3.11, 3.12, 3.13
 
 ## CI/Release Workflow
 
@@ -146,7 +146,7 @@ an instance. Tests that call `create_instance()` must reset it in
 
 - **uv not pip**: Always use `uv` commands; `pip` is not the project standard
 - **--frozen flag**: Lock file (`uv.lock`) is tracked; use `--frozen` to enforce reproducibility
-- **Multi-version testing**: Agents must run tests on 3.11, 3.12, 3.13, 3.14 before approval
+- **Multi-version testing**: Agents must run tests on 3.11, 3.12, 3.13 before approval
 - **Vocab is external**: Actual vocabulary data lives in `biz-dfch-asdste100vocab` package (not in this repo)
 - **Rules are external**: Ruleset data lives in `biz-dfch-asdste100rules` package (not in this repo)
 - **Lifespan pattern**: MCP server loads vocab and rules once at startup via lifespan context manager (`server.py`)

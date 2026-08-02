@@ -42,7 +42,7 @@ Before opening a new issue, please **search existing issues** to avoid duplicate
 
 ### 3.1. Prerequisites
 
-- Python **3.11** and Python **3.12** and Python **3.13** and Python **3.14**
+- Python **3.11** and Python **3.12** and Python **3.13**
 - `git`
 - Recommended: `python -m venv`
 - Recommended: `unittest`
