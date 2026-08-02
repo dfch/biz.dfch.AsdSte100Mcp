@@ -12,7 +12,11 @@
 [![MCP](https://img.shields.io/badge/MCP-Model_Context_Protocol-8A2BE2.svg)](https://modelcontextprotocol.io/)
 [![Auth: none](https://img.shields.io/badge/auth-none-brightgreen.svg)](#architecture-decision)
 
-An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard.
+An MCP server for the [ASD-STE100 (Simplified Technical English) Issue 9 standard](https://www.asd-ste100.org/).
+
+ASD-STE100: Copyright by (c) [ASD](https://www.asd-europe.org/).
+
+I am in no way affiliated with ASD. ASD does not endorse my work.
 
 ## Tools
 
