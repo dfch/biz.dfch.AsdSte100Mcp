@@ -60,7 +60,7 @@ ste100-mcp
 ### SSE / network
 
 ```bash
-ste100-mcp --transport sse --host 127.0.0.1 --port 8000
+ste100-mcp --transport sse --host localhost --port 8000
 ```
 
 ### Options
@@ -68,7 +68,7 @@ ste100-mcp --transport sse --host 127.0.0.1 --port 8000
 | Option | Env var | Default | Description |
 |---|---|---|---|
 | `--transport` | `STE100_MCP_TRANSPORT` | `stdio` | Transport mode: `stdio` or `sse` |
-| `--host` | `STE100_MCP_HOST` | `127.0.0.1` | Bind address (SSE only) |
+| `--host` | `STE100_MCP_HOST` | `localhost` | Bind address (SSE only) |
 | `--port` | `STE100_MCP_PORT` | `8000` | TCP port (SSE only) |
 | `--env` | — | auto-discovered | Path to a `.env` file |
 | `--file` / `-f` | `STE100_MCP_FILES` | _(empty)_ | Path to a vocabulary file (`*.jsonl`); repeatable |

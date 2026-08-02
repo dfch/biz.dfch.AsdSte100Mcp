@@ -58,14 +58,14 @@ The server can be started in two transport modes:
 * **SSE / network** — the server binds a TCP port and accepts HTTP
   connections; suitable for cloud deployments::
 
-      ste100-mcp --transport sse --host 127.0.0.1 --port 8000
+      ste100-mcp --transport sse --host localhost --port 8000
 
 Environment variables (all optional, CLI flags take precedence):
 
 ``STE100_MCP_TRANSPORT``
     ``stdio`` (default) or ``sse``.
 ``STE100_MCP_HOST``
-    Bind address for SSE mode (default ``127.0.0.1``).
+    Bind address for SSE mode (default ``localhost``).
 ``STE100_MCP_PORT``
     TCP port for SSE mode (default ``8000``).
 ``STE100_MCP_FILES``
@@ -126,7 +126,7 @@ def _warn_on_public_binding(host: str) -> None:
     if not in_container:
         sys.stderr.write(
             f"WARNING: binding ste100-mcp to '{host}' outside a container "
-            "exposes it to the local network. Use --host 127.0.0.1 for "
+            "exposes it to the local network. Use --host localhost for "
             "local development.\n"
         )
 

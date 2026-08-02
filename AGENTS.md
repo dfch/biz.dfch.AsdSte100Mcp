@@ -53,7 +53,7 @@ uv run --frozen ste100-mcp --rules-file /path/to/custom_rules.json
 
 ### Run the MCP server in SSE/network mode (development only)
 ```bash
-uv run --frozen ste100-mcp --transport sse --host 127.0.0.1 --port 8000
+uv run --frozen ste100-mcp --transport sse --host localhost --port 8000
 ```
 
 ## Key Architecture
