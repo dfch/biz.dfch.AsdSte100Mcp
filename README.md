@@ -10,13 +10,33 @@
 [![PyPI version](https://img.shields.io/badge/dynamic/json?url=https://www.pypi.org/pypi/biz-dfch-asdste100mcp/json&label=PyPI&query=$.info.version&color=blue)](https://www.pypi.org/project/biz-dfch-asdste100mcp/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/biz-dfch-asdste100mcp.svg)](https://pypistats.org/packages/biz-dfch-asdste100mcp)
 [![MCP](https://img.shields.io/badge/MCP-Model_Context_Protocol-8A2BE2.svg)](https://modelcontextprotocol.io/)
-[![Auth: none](https://img.shields.io/badge/auth-none-brightgreen.svg)](#architecture-decision)
+[![Auth: none](https://img.shields.io/badge/auth-none-brightgreen.svg)](#authentication)
 
 An MCP server for the [ASD-STE100 (Simplified Technical English) Issue 9 standard](https://www.asd-ste100.org/).
 
 ASD-STE100: Copyright by (c) [ASD](https://www.asd-europe.org/).
 
 I am in no way affiliated with ASD. ASD does not endorse my work.
+
+## Table of Contents
+
+- [Tools](#tools)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Authentication](#authentication)
+- [Add to OpenCode](#add-to-opencode)
+- [Development](#development)
+- [Make a Release](#make-a-release)
+- [License](#license)
+
+## Authentication
+
+This server exposes only read-only lookup tools over vocabulary and rules
+data that is bundled with the package; there is nothing to authenticate
+against. No API keys, tokens, or credentials are required or supported in
+either `stdio` or `sse` transport mode. If you expose the `sse` transport
+beyond `localhost`, secure it at the network layer (e.g. a reverse proxy)
+rather than expecting the server to authenticate requests itself.
 
 ## Tools
 
@@ -57,17 +77,51 @@ uv add biz-dfch-asdste100mcp
 
 ## Usage
 
+### MCP Inspector
+
+If you want to test the MCP server without a tool like `OpenCode`, you can do this with [`MCP Inspector`](https://modelcontextprotocol.io/docs/2026-07-28/tools/inspector).
+
+`MCP Inspector` is part of the `mcp[cli]` package. When you install this project with `--extra dev` you can use `MCP Inspector`.
+
+NOTE: The examples below use `bunx` instead of `npx` to launch `MCP Inspector`; `npx` has not been tested.
+
 ### stdio (Claude Desktop, OpenCode, and other MCP hosts)
 
 ```bash
 asdste100-mcp
 ```
 
+Run `MCP Inspector` against the server over `stdio`:
+
+```bash
+bunx @modelcontextprotocol/inspector uv run --frozen --directory . asdste100-mcp
+```
+
+![MCP Inspector with `stdio`](./assets/mcp-stdio.png)
+
 ### SSE / network
 
 ```bash
 asdste100-mcp --transport sse --host localhost --port 8000
 ```
+
+NOTE: You do not have to supply the option `--port` to the MCP server. The default value of `port` is `8000`.
+
+Start the server, then connect `MCP Inspector` to it — these are two separate commands, run in two separate terminals:
+
+```bash
+# terminal 1: start the server
+uvx --from . asdste100-mcp -t sse
+```
+
+```bash
+# terminal 2: launch the inspector and connect it to the running server
+bunx @modelcontextprotocol/inspector
+```
+
+![Start the MCP server with `uvx` and then start the `MCP Inspector` with `bunx`](./assets/uvx-mcp-bunx-inspector.png)
+
+![MCP Inspector with `sse`](./assets/mcp-sse.png)
 
 ### Options
 
@@ -95,10 +149,7 @@ asdste100-mcp --transport sse --host localhost --port 8000
 | `STE100_MCP_RULES_FILES` | _(empty)_ | Colon-separated paths to additional rules files (each a single JSON array) |
 | `STE100_MCP_USE_STE100_RULES` | `true` | Load the built-in ASD-STE100 Issue 9 ruleset |
 
-### OpenCode Configuration
-
-
-## Adding ASD-STE100 MCP Server to OpenCode
+## Add to OpenCode
 
 To add the ASD-STE100 (Simplified Technical English) MCP server to your OpenCode configuration:
 
