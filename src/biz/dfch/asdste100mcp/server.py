@@ -17,9 +17,9 @@
 
 """MCP server for the ASD-STE100 Issue 9 vocabulary and rules.
 
-Exposes five read-only tools backed by the local ``biz-dfch-ste100vocab``
-library and eight read-only tools backed by the local
-``biz-dfch-asdste100rules`` library — no network calls are made at
+Exposes six read-only tools backed by the local ``biz-dfch-asdste100vocab``
+and ``biz-dfch-asdste100nlp`` libraries, and eight read-only tools backed by
+the local ``biz-dfch-asdste100rules`` library — no network calls are made at
 tool-invocation time.
 
 Tools
@@ -29,6 +29,7 @@ word_match        -- Search the vocabulary using a regular expression pattern. R
 word_fuzzy        -- Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when word_find returns nothing and you want suggestions.
 word_list         -- Return all vocabulary entries. Only use when you need to process the full vocabulary. Use word_count instead if you only need the total. Paginated (`max_results`/`offset`); returns a `WordResult`.
 word_count        -- Return the total number of entries in the vocabulary. Use instead of word_list when you only need the count.
+word_synonym      -- Search for vocabulary entries that are WordNet synonyms of a word (via `biz-dfch-asdste100nlp`'s `Nlp` class). Use this to find approved alternatives for a non-STE word.
 rules_find        -- Search for rules by exact id (e.g. 'R1.1', 'GR-8').
 rules_match       -- Search rules using a regular expression over name and summary.
 rules_search      -- Full-text search rules, including every content block (notes, examples, technical noun/verb lists, ...). Paginated (`max_results`/`offset`); returns a `SearchResult`.
@@ -49,6 +50,7 @@ from mcp.server import MCPServer
 from mcp_types import ToolAnnotations
 from pydantic import Field
 
+from biz.dfch.asdste100nlp import Nlp
 from biz.dfch.asdste100rules.rules import Rules
 from biz.dfch.asdste100vocab import Vocab
 
@@ -80,13 +82,25 @@ def _get_rules() -> Rules:
 
 
 # ---------------------------------------------------------------------------
-# Lifespan: load vocab and rules on startup, release on shutdown
+# Shared NLP instance (loaded once at startup)
+# ---------------------------------------------------------------------------
+
+_nlp: Nlp | None = None  # pylint: disable=invalid-name
+
+
+def _get_nlp() -> Nlp:
+    assert _nlp is not None, "Nlp not initialised — lifespan did not run."
+    return _nlp
+
+
+# ---------------------------------------------------------------------------
+# Lifespan: load vocab, rules, and nlp on startup, release on shutdown
 # ---------------------------------------------------------------------------
 
 
 @asynccontextmanager
 async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]:  # noqa: ARG001
-    global _vocab, _rules  # pylint: disable=global-statement
+    global _vocab, _rules, _nlp  # pylint: disable=global-statement
     _ = server
     settings = Factory.get_instance()
     _vocab = Vocab(
@@ -98,11 +112,13 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
         files=settings.rules_files,
         use_builtin=settings.use_ste100_rules,
     )
+    _nlp = Nlp(_vocab)
     try:
         yield {}
     finally:
         _vocab = None
         _rules = None
+        _nlp = None
 
 
 # ---------------------------------------------------------------------------

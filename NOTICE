@@ -36,13 +36,34 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 -------------------------------------------------------------------------------
-biz-dfch-ste100vocab 0.7.1
+biz-dfch-asdste100vocab 0.8.0
 Copyright (C) 2025-2026 Ronald Rink, d-fens GmbH, http://d-fens.ch
 License: AGPL-3.0-or-later
 https://github.com/dfch/biz.dfch.AsdSte100Vocab
 
 This library is licensed under the GNU Affero General Public License v3.0
 or later. See https://www.gnu.org/licenses/agpl-3.0 for the full license text.
+
+-------------------------------------------------------------------------------
+biz-dfch-asdste100rules 0.1.1
+Copyright (C) 2026 Ronald Rink, d-fens GmbH, http://d-fens.ch
+License: AGPL-3.0-or-later
+https://github.com/dfch/biz.dfch.asdste100rules
+
+This library is licensed under the GNU Affero General Public License v3.0
+or later. See https://www.gnu.org/licenses/agpl-3.0 for the full license text.
+
+-------------------------------------------------------------------------------
+biz-dfch-asdste100nlp 0.1.0
+Copyright (C) 2026 Ronald Rink, d-fens GmbH, http://d-fens.ch
+License: AGPL-3.0-or-later
+https://github.com/dfch/biz.dfch.AsdSte100Nlp
+
+This library is licensed under the GNU Affero General Public License v3.0
+or later. See https://www.gnu.org/licenses/agpl-3.0 for the full license text.
+Note: this library bundles the NLTK WordNet corpus as static package data;
+see its own NOTICE file for the nltk (Apache-2.0) and WordNet (Princeton)
+license notices.
 
 -------------------------------------------------------------------------------
 mcp 2.0.0

@@ -69,6 +69,10 @@ uv run --frozen asdste100-mcp --transport sse --host localhost --port 8000
     - `word_fuzzy.py` — fuzzy matching
     - `word_list.py` — all entries (expensive)
     - `word_count.py` — entry count only
+    - `word_synonym.py` — WordNet synonym lookup, backed by the external
+      `biz-dfch-asdste100nlp` library's `Nlp` class (wraps the same
+      `Vocab` instance as the other word tools); cross-references synset
+      lemma names against vocabulary entry names
   - `rules/` — ruleset tools (`rules_*`), backed by the external
     `biz-dfch-asdste100rules` library; return types reuse that library's
     own pydantic models (`Rule`, `ContentItem`, `RuleOverview`) directly
@@ -102,6 +106,9 @@ uv run --frozen asdste100-mcp --transport sse --host localhost --port 8000
   `ASDSTE100_MCP_FILES`/`ASDSTE100_MCP_RULES_FILES`.
 - `Factory.get_instance()` — called by `_lifespan` in `server.py`;
   asserts `create_instance` was called first.
+- `_lifespan` also builds a shared `Nlp` instance (`_nlp`/`_get_nlp()` in
+  `server.py`), constructed as `Nlp(_vocab)` — it wraps the same `Vocab`
+  object as the other word tools, not a separate one.
 
 **Gotcha**: `Factory` is a class-level singleton (`Factory._instance`), not
 an instance. Tests that call `create_instance()` must reset it in
@@ -137,7 +144,9 @@ an instance. Tests that call `create_instance()` must reset it in
 ## Dependencies
 
 - **Runtime**: `mcp`, `typer`, `pydantic-settings`, `biz-dfch-asdste100vocab`
-  (vocabulary data), `biz-dfch-asdste100rules` (ruleset data)
+  (vocabulary data), `biz-dfch-asdste100rules` (ruleset data),
+  `biz-dfch-asdste100nlp` (WordNet-backed synonym lookup for `word_synonym`,
+  wraps `nltk`)
 - **Dev**: ruff, mcp[cli], build, twine, pyinstaller, coverage; `pylint` lives
   in the `test` extra, not `dev` — `dev` depends on `[test]`
 - **.env support**: `python-dotenv` with auto-discovery (walks upward from entry point)
@@ -149,7 +158,10 @@ an instance. Tests that call `create_instance()` must reset it in
 - **Multi-version testing**: Agents must run tests on 3.11, 3.12, 3.13 before approval
 - **Vocab is external**: Actual vocabulary data lives in `biz-dfch-asdste100vocab` package (not in this repo)
 - **Rules are external**: Ruleset data lives in `biz-dfch-asdste100rules` package (not in this repo)
-- **Lifespan pattern**: MCP server loads vocab and rules once at startup via lifespan context manager (`server.py`)
+- **WordNet data is bundled**: `biz-dfch-asdste100nlp` ships its own
+  `nltk_data` (WordNet corpus) inside the package, so `word_synonym` needs
+  no `nltk.download()` call and no network access at runtime
+- **Lifespan pattern**: MCP server loads vocab, rules, and nlp once at startup via lifespan context manager (`server.py`)
 - **Read-only tools**: All tools are read-only; no state modification
 - **.env auto-loading**: CLI pre-loads `.env` before Typer parses args (`cli.py`)
 

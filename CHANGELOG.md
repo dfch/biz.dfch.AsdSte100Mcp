@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- New `word_synonym` read-only tool backed by the `biz-dfch-asdste100nlp`
+  library's `Nlp` class: looks up WordNet synsets for a word and cross-
+  references their lemma names against the ASD-STE100 Issue 9 vocabulary,
+  returning approved/rejected entries that are synonyms of the input word.
+  Registered in `tools/words/word_synonym.py`, following the same
+  structure as `word_find`/`word_fuzzy`; the shared `Nlp` instance is
+  created in `server.py`'s lifespan (`_nlp`/`_get_nlp()`), wrapping the
+  same `Vocab` instance used by the other vocabulary tools.
+- Runtime dependency on `biz-dfch-asdste100nlp>=0.1.0` in `pyproject.toml`.
+- `tests/tools/words/test_word_synonym.py` — unit tests for the
+  `Nlp.synonym` lookup and the `word_synonym` tool function.
 - MCP Registry publishing support via new `publish-to-mcp-registry` GitHub Actions job:
   - Automatically publishes server metadata to the [official MCP Registry](https://registry.modelcontextprotocol.io/)
   - Uses GitHub OIDC authentication (zero secrets, consistent with PyPI Trusted Publishing)

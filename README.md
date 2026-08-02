@@ -49,6 +49,7 @@ rather than expecting the server to authenticate requests itself.
 | `word_fuzzy` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when `word_find` returns nothing and you want fuzzy suggestions. |
 | `word_list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use `word_count` instead if you only need the total. Paginated (`max_results`/`offset`); returns a `WordResult`. |
 | `word_count` | Return the total number of entries in the vocabulary. Use instead of `word_list` when you only need the count. |
+| `word_synonym` | Search for vocabulary entries that are WordNet synonyms of a word, via the `biz-dfch-asdste100nlp` library's `Nlp` class. Use this to find approved alternatives for a non-STE word. |
 
 ### Rules
 

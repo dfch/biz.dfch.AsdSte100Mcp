@@ -59,6 +59,7 @@ dependencies = [
     "pydantic-settings>=2.14.2",
     "biz-dfch-asdste100vocab>=0.8.0",
     "biz-dfch-asdste100rules>=0.1.1",
+    "biz-dfch-asdste100nlp>=0.1.0",
 ]
 
 # Install project in editable mode:
