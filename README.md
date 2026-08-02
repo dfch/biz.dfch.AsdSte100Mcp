@@ -26,6 +26,7 @@ I am in no way affiliated with ASD. ASD does not endorse my work.
 - [Authentication](#authentication)
 - [Add to OpenCode](#add-to-opencode)
 - [Development](#development)
+- [Related Projects](#related-projects)
 - [Make a Release](#make-a-release)
 - [License](#license)
 
@@ -191,6 +192,16 @@ uv run --frozen pylint $(git ls-files '*.py')
 ```bash
 uv run --frozen python -m unittest discover -v -s tests -t . -p "test_*.py"
 ```
+
+## Related Projects
+
+This server is part of the ASD-STE100 tooling family:
+
+* [biz.dfch.AsdSte100Vocab](https://github.com/dfch/biz.dfch.AsdSte100Vocab) — the ASD-STE100 Issue 9 vocabulary library
+* [biz.dfch.AsdSte100Rules](https://github.com/dfch/biz.dfch.AsdSte100Rules) — the ASD-STE100 Issue 9 ruleset library
+* [biz.dfch.AsdSte100Nlp](https://github.com/dfch/biz.dfch.AsdSte100Nlp) — WordNet-based synonym lookup for ASD-STE100 words
+* [biz.dfch.AsdSte100Lookup](https://github.com/dfch/biz.dfch.AsdSte100Lookup) — an interactive CLI to look up words and rules
+* [biz.dfch.AsdSte100Mcp](https://github.com/dfch/biz.dfch.AsdSte100Mcp) — this repo: an MCP server exposing vocabulary and rules lookup tools
 
 ## Make a Release
 
