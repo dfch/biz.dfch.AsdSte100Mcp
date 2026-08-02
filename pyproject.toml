@@ -55,7 +55,7 @@ classifiers = [
 
 dependencies = [
     "python-dotenv>=1.2.2",
-    "mcp",
+    "mcp>=2.0.0",
     "typer>=0.12",
     "pydantic-settings>=2.14.2",
     "biz-dfch-asdste100vocab>=0.8.0",

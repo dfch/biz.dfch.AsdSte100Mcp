@@ -76,7 +76,7 @@ wheels = [
 
 [[package]]
 name = "biz-dfch-asdste100mcp"
-version = "0.2.0"
+version = "1.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "biz-dfch-asdste100rules" },
@@ -115,7 +115,7 @@ requires-dist = [
     { name = "biz-dfch-asdste100vocab", specifier = ">=0.8.0" },
     { name = "build", marker = "extra == 'dev'" },
     { name = "coverage", marker = "extra == 'test'" },
-    { name = "mcp" },
+    { name = "mcp", specifier = ">=2.0.0" },
     { name = "mcp", extras = ["cli"], marker = "extra == 'dev'" },
     { name = "parameterized", marker = "extra == 'test'", specifier = ">=0.9.0" },
     { name = "pydantic-settings", specifier = ">=2.14.2" },
