@@ -76,7 +76,7 @@ wheels = [
 
 [[package]]
 name = "biz-dfch-asdste100mcp"
-version = "2.0.0"
+version = "3.0.0"
 source = { editable = "." }
 dependencies = [
     { name = "biz-dfch-asdste100nlp" },
@@ -114,7 +114,7 @@ requires-dist = [
     { name = "biz-dfch-asdste100mcp", extras = ["test"], marker = "extra == 'dev'" },
     { name = "biz-dfch-asdste100nlp", specifier = ">=0.1.0" },
     { name = "biz-dfch-asdste100rules", specifier = ">=0.1.1" },
-    { name = "biz-dfch-asdste100vocab", specifier = ">=0.8.0" },
+    { name = "biz-dfch-asdste100vocab", specifier = ">=0.8.1" },
     { name = "build", marker = "extra == 'dev'" },
     { name = "coverage", marker = "extra == 'test'" },
     { name = "mcp", specifier = ">=2.0.0" },
@@ -164,15 +164,16 @@ wheels = [
 
 [[package]]
 name = "biz-dfch-asdste100vocab"
-version = "0.8.0"
+version = "0.8.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dacite" },
-    { name = "dotenv" },
+    { name = "python-dotenv" },
+    { name = "typer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/14/98/e5e0a76fee96e350922b4e2e9108be74a9740cea7d8e1df6154101c12311/biz_dfch_asdste100vocab-0.8.0.tar.gz", hash = "sha256:556bccd3299ef24fe544deebd523db84e838a6f11a384aa9dee5d3b38ce5fb15", size = 497550, upload-time = "2026-07-31T16:31:10.622Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c6/ad/b3357b4063a7bf6aa73653cc0ce7cddfa0594aa8c2723ceb979a9fc4bd0e/biz_dfch_asdste100vocab-0.8.1.tar.gz", hash = "sha256:62dc2105c2700fbc5c84aeb9b0a6dd92988bbd96c9951689d486f0081bf58e8b", size = 498273, upload-time = "2026-08-02T12:04:23.576Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/08/8c/d19f0e9d03b32f09d0ffd8efa298e35a34eb3738b4ef98086742c4d5daa5/biz_dfch_asdste100vocab-0.8.0-py3-none-any.whl", hash = "sha256:f6a10702bdf34372f35bf7ae63fdd98068a87cb22ed16bfce50c5faead51fa26", size = 524450, upload-time = "2026-07-31T16:31:08.745Z" },
+    { url = "https://files.pythonhosted.org/packages/e3/54/98d5725693e594d8421c20732168ce75c946976bbf259c03390e2d44bf46/biz_dfch_asdste100vocab-0.8.1-py3-none-any.whl", hash = "sha256:bd6a8ef424ba65b8d7e3c604edd98ffa482c81932950fff0913dd2900871a81f", size = 524785, upload-time = "2026-08-02T12:04:22.176Z" },
 ]
 
 [[package]]
@@ -565,17 +566,6 @@ source = { registry = "https://pypi.org/simple" }
 sdist = { url = "https://files.pythonhosted.org/packages/39/a4/5180d9afc57e8fca05601dd652bdff19604c218814037fe90ffc7625a50a/docutils-0.23.tar.gz", hash = "sha256:746f5060322511280a1e50eb76846ed6bf2342984b2ac04dc42caa1a8d78799e", size = 2303823, upload-time = "2026-05-27T17:41:06.934Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/32/91/30151a39f7570f448ed84529390628a651d7f27c87d73c9b887f8189695e/docutils-0.23-py3-none-any.whl", hash = "sha256:25d013af9bf23bc1c7b2b093dff4208166c53a94786c9e447808335ef1185fea", size = 634701, upload-time = "2026-05-27T17:40:58.442Z" },
-]
-
-[[package]]
-name = "dotenv"
-version = "0.9.9"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "python-dotenv" },
-]
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/b2/b7/545d2c10c1fc15e48653c91efde329a790f2eecfbbf2bd16003b5db2bab0/dotenv-0.9.9-py2.py3-none-any.whl", hash = "sha256:29cf74a087b31dafdb5a446b6d7e11cbce8ed2741540e2339c69fbef92c94ce9", size = 1892, upload-time = "2025-02-19T22:15:01.647Z" },
 ]
 
 [[package]]

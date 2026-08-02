@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-08-02
+
 ### Added
 
 - MCP resource support, in addition to tools:
@@ -19,6 +21,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     structure), with a `rules/` sub-package for the rules resources;
     registered in `server.py` alongside the existing `tools` import.
   - `tests/resources/rules/` — unit tests for both resource functions.
+
+### Changed
+
+- **Breaking**: Renamed the `Settings` fields `files`, `use_ste100`,
+  `use_ste100_technical_words`, and `use_ste100_rules` to `vocab_files`,
+  `use_asdste100_vocab`, `use_asdste100_technical_words`, and
+  `use_asdste100_rules` respectively (`settings.py`). Because
+  `Settings.model_config` derives environment variable names from the
+  field name under the `ASDSTE100_MCP_` prefix, this also renames the
+  corresponding environment variables: `ASDSTE100_MCP_FILES` →
+  `ASDSTE100_MCP_VOCAB_FILES`, `ASDSTE100_MCP_USE_STE100` →
+  `ASDSTE100_MCP_USE_ASDSTE100_VOCAB`,
+  `ASDSTE100_MCP_USE_STE100_TECHNICAL_WORDS` →
+  `ASDSTE100_MCP_USE_ASDSTE100_TECHNICAL_WORDS`, and
+  `ASDSTE100_MCP_USE_STE100_RULES` → `ASDSTE100_MCP_USE_ASDSTE100_RULES`.
+  Update any `.env` file, shell environment, or deployment config that
+  sets these variables under their previous names. `server.py`'s lifespan
+  function and `tests/settings/test_factory.py` were updated accordingly.
+- Bumped the `biz-dfch-asdste100vocab` runtime dependency from `>=0.8.0`
+  to `>=0.8.1`.
+- Updated README.md wording in the Authentication section to mention
+  resources alongside tools, and added a note about the MCP Inspector
+  sometimes failing to connect over `stdio` (use `sse` instead).
 
 ## [2.0.0] - 2026-08-02
 
@@ -241,7 +266,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [1.0.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.2.0...v1.0.0
 [0.2.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.3...v0.2.0
 [0.1.3]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.2...v0.1.3
-[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v3.0.0...HEAD
+[3.0.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v2.0.0...v3.0.0
 [2.0.0]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v1.0.0...v2.0.0
 [0.1.2]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/dfch/biz.dfch.AsdSte100Mcp/compare/v0.1.0...v0.1.1

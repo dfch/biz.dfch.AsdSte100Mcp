@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "biz-dfch-asdste100mcp"
-version = "2.0.0"
+version = "3.0.0"
 description = "An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -57,7 +57,7 @@ dependencies = [
     "mcp>=2.0.0",
     "typer>=0.12",
     "pydantic-settings>=2.14.2",
-    "biz-dfch-asdste100vocab>=0.8.0",
+    "biz-dfch-asdste100vocab>=0.8.1",
     "biz-dfch-asdste100rules>=0.1.1",
     "biz-dfch-asdste100nlp>=0.1.0",
 ]
