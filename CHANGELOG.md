@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `asdste100://version` MCP resource — installed version numbers of the MCP
+  server itself (`biz-dfch-asdste100mcp`) and its three data-backing
+  libraries: `biz-dfch-asdste100vocab`, `biz-dfch-asdste100rules`, and
+  `biz-dfch-asdste100nlp`. Backed by `importlib.metadata.version()`; no
+  network calls. New `models/version_info.py` (`VersionInfo` model) and
+  `resources/version.py`, registered in `resources/__init__.py`.
+
 ## [3.0.0] - 2026-08-02
 
 ### Added

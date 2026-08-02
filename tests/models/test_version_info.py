@@ -15,19 +15,20 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""MCP resource registrations for the ASD-STE100 vocabulary and rules server.
+"""Tests for the VersionInfo Pydantic model."""
 
-Each sub-package/module registers a group of resources against the shared
-``mcp`` application instance: ``rules`` for the rules resources, ``version``
-for the server/library version resource.  Import this package to load all
-resources at once::
+import unittest
 
-    from biz.dfch.asdste100mcp import resources  # noqa: F401 (side-effects only)
-"""
+from biz.dfch.asdste100mcp.models import VersionInfo
 
-from . import rules, version  # noqa: F401
 
-__all__ = [
-    "rules",
-    "version",
-]
+class TestVersionInfo(unittest.TestCase):
+    """Tests for the VersionInfo Pydantic model."""
+
+    def test_version_info_holds_fields(self):
+        """A VersionInfo must store mcp, vocab, rules, and nlp as given."""
+        info = VersionInfo(mcp="1.0.0", vocab="2.0.0", rules="3.0.0", nlp="4.0.0")
+        self.assertEqual(info.mcp, "1.0.0")
+        self.assertEqual(info.vocab, "2.0.0")
+        self.assertEqual(info.rules, "3.0.0")
+        self.assertEqual(info.nlp, "4.0.0")

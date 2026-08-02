@@ -15,19 +15,29 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""MCP resource registrations for the ASD-STE100 vocabulary and rules server.
+"""Pydantic model for the ``asdste100://version`` resource."""
 
-Each sub-package/module registers a group of resources against the shared
-``mcp`` application instance: ``rules`` for the rules resources, ``version``
-for the server/library version resource.  Import this package to load all
-resources at once::
+from __future__ import annotations
 
-    from biz.dfch.asdste100mcp import resources  # noqa: F401 (side-effects only)
-"""
+from pydantic import BaseModel
 
-from . import rules, version  # noqa: F401
 
-__all__ = [
-    "rules",
-    "version",
-]
+class VersionInfo(BaseModel):
+    """Installed version numbers of the MCP server and its data libraries.
+
+    Parameters
+    ----------
+    mcp:
+        Version of this ``biz-dfch-asdste100mcp`` package.
+    vocab:
+        Version of the ``biz-dfch-asdste100vocab`` vocabulary library.
+    rules:
+        Version of the ``biz-dfch-asdste100rules`` ruleset library.
+    nlp:
+        Version of the ``biz-dfch-asdste100nlp`` nlp library.
+    """
+
+    mcp: str
+    vocab: str
+    rules: str
+    nlp: str

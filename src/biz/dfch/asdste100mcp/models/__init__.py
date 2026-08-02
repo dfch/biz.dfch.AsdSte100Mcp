@@ -27,6 +27,7 @@ from .paged_result import PagedResult
 from .rules_examples_result import RulesExamplesResult
 from .search_result import SearchResult
 from .toc_entry import TocEntry
+from .version_info import VersionInfo
 from .word import Word
 from .word_meaning import WordMeaning
 from .word_note import WordNote
@@ -37,6 +38,7 @@ __all__ = [
     "RulesExamplesResult",
     "SearchResult",
     "TocEntry",
+    "VersionInfo",
     "Word",
     "WordMeaning",
     "WordNote",

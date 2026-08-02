@@ -43,6 +43,7 @@ Resources
 ---------
 asdste100://rules/toc          -- Table-of-contents outline of the ruleset (mirrors `rules_toc`).
 asdste100://rules/rule/{id_}   -- A single rule/recommendation/information item by exact id (mirrors `rules_find`).
+asdste100://version            -- Version numbers of the MCP server, vocab, rules, and nlp libraries.
 """  # noqa: E501
 
 from __future__ import annotations

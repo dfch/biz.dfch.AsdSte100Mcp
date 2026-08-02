@@ -76,6 +76,7 @@ an "@mention" or resource picker), without going through a tool call.
 |---|---|
 | `asdste100://rules/toc` | Table-of-contents outline of the ruleset: the distinct (section, category) pairs, each with the ids they contain. Mirrors the `rules_toc` tool with no `section` filter. |
 | `asdste100://rules/rule/{id_}` | A single rule/recommendation/information item by exact id (case-insensitive), e.g. `asdste100://rules/rule/R1.1`. Mirrors the `rules_find` tool; an unknown id resolves to an empty list rather than an error. |
+| `asdste100://version` | Installed version numbers of the MCP server itself and its three data-backing libraries: `biz-dfch-asdste100vocab`, `biz-dfch-asdste100rules`, and `biz-dfch-asdste100nlp`. |
 
 ## Installation
 
