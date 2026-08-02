@@ -33,12 +33,13 @@ I am in no way affiliated with ASD. ASD does not endorse my work.
 
 ## Authentication
 
-This server exposes only read-only lookup tools over vocabulary and rules
-data that is bundled with the package; there is nothing to authenticate
-against. No API keys, tokens, or credentials are required or supported in
-either `stdio` or `sse` transport mode. If you expose the `sse` transport
-beyond `localhost`, secure it at the network layer (e.g. a reverse proxy)
-rather than expecting the server to authenticate requests itself.
+This server exposes only read-only lookup tools and resources over
+vocabulary and rules data that is bundled with the package; there is
+nothing to authenticate against. No API keys, tokens, or credentials are
+required or supported in either `stdio` or `sse` transport mode. If you
+expose the `sse` transport beyond `localhost`, secure it at the network
+layer (e.g. a reverse proxy) rather than expecting the server to
+authenticate requests itself.
 
 ## Tools
 
@@ -111,6 +112,8 @@ bunx @modelcontextprotocol/inspector uv run --frozen --directory . asdste100-mcp
 ```
 
 ![MCP Inspector with `stdio`](./assets/mcp-stdio.png)
+
+NOTE: Sometimes, the MCP Inspector cannot connect to the MCP server via `stdio`. Use the `sse` option (see below) instead.
 
 ### SSE / network
 

@@ -65,11 +65,11 @@ class Settings(BaseSettings):
 
     model_config = SettingsConfigDict(env_prefix="ASDSTE100_MCP_", extra="ignore")
 
-    files: list[Path] = Field(default_factory=list)
-    use_ste100: bool = True
-    use_ste100_technical_words: bool = False
+    vocab_files: list[Path] = Field(default_factory=list)
+    use_asdste100_vocab: bool = True
+    use_asdste100_technical_words: bool = False
     rules_files: list[Path] = Field(default_factory=list)
-    use_ste100_rules: bool = True
+    use_asdste100_rules: bool = True
 
 
 # ---------------------------------------------------------------------------
@@ -130,8 +130,8 @@ class Factory:
         with Factory._lock:
             if Factory._instance is None:
                 settings = Settings()
-                merged = list(dict.fromkeys(settings.files + (extra_files or [])))
-                settings.files = merged
+                merged = list(dict.fromkeys(settings.vocab_files + (extra_files or [])))
+                settings.vocab_files = merged
                 merged_rules = list(dict.fromkeys(settings.rules_files + (extra_rules_files or [])))
                 settings.rules_files = merged_rules
                 Factory._instance = settings

@@ -43,20 +43,20 @@ class TestFactory(unittest.TestCase):
         """create_instance() called with no arguments must succeed."""
         result = Factory.create_instance()
         self.assertIsInstance(result, Settings)
-        self.assertIsInstance(result.files, list)
+        self.assertIsInstance(result.vocab_files, list)
 
     def test_create_instance_with_extra_files_merges_paths(self):
         """Extra files passed to create_instance() must appear in settings.files."""
         extra = [Path("/tmp/opencode/a.jsonl"), Path("/tmp/opencode/b.jsonl")]
         result = Factory.create_instance(extra_files=extra)
         for path in extra:
-            self.assertIn(path, result.files)
+            self.assertIn(path, result.vocab_files)
 
     def test_create_instance_deduplicates_extra_files(self):
         """Duplicate paths must appear only once in settings.files."""
         path = Path("/tmp/opencode/a.jsonl")
         result = Factory.create_instance(extra_files=[path, path])
-        self.assertEqual(result.files.count(path), 1)
+        self.assertEqual(result.vocab_files.count(path), 1)
 
     def test_create_instance_without_extra_rules_files_returns_settings(self):
         """create_instance() called with no rules args must succeed."""

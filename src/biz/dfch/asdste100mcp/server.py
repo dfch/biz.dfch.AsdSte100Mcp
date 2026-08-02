@@ -109,13 +109,13 @@ async def _lifespan(server: MCPServer) -> AsyncGenerator[dict[str, Any], None]: 
     _ = server
     settings = Factory.get_instance()
     _vocab = Vocab(
-        files=settings.files,
-        use_ste100=settings.use_ste100,
-        use_ste100_technical_word=settings.use_ste100_technical_words,
+        files=settings.vocab_files,
+        use_ste100=settings.use_asdste100_vocab,
+        use_ste100_technical_word=settings.use_asdste100_technical_words,
     )
     _rules = Rules(
         files=settings.rules_files,
-        use_builtin=settings.use_ste100_rules,
+        use_builtin=settings.use_asdste100_rules,
     )
     _nlp = Nlp(_vocab)
     try:
