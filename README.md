@@ -22,7 +22,7 @@ An MCP server for the ASD-STE100 (Simplified Technical English) Issue 9 standard
 |---|---|
 | `word_find`  | Search for a term by exact name (case-insensitive) in the ASD-STE100 Issue 9 vocabulary. Return approved/rejected status, part of speech, STE examples, and approved alternatives. Use this first when you know the exact word. Use `word_match` with a wildcard if this tool returns no items. |
 | `word_match` | Search the vocabulary using a regular expression pattern. Return all entries whose term matches. Use it to find all words with a common prefix or pattern (e.g. ^de or .*tion$). Paginated (`max_results`/`offset`); returns a `WordResult`. |
-| `word_similar` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when `word_find` returns nothing and you want suggestions. |
+| `word_fuzzy` | Search for a term with sequence-matching (Python difflib.get_close_matches). Results may not be obvious — use when `word_find` returns nothing and you want fuzzy suggestions. |
 | `word_list` | Return all vocabulary entries. Only use when you need to process the full vocabulary. Use `word_count` instead if you only need the total. Paginated (`max_results`/`offset`); returns a `WordResult`. |
 | `word_count` | Return the total number of entries in the vocabulary. Use instead of `word_list` when you only need the count. |
 

@@ -66,7 +66,7 @@ uv run --frozen ste100-mcp --transport sse --host localhost --port 8000
   - `words/` — vocabulary tools (`word_*`)
     - `word_find.py` — exact term lookup
     - `word_match.py` — regex pattern search
-    - `word_similar.py` — fuzzy matching
+    - `word_fuzzy.py` — fuzzy matching
     - `word_list.py` — all entries (expensive)
     - `word_count.py` — entry count only
   - `rules/` — ruleset tools (`rules_*`), backed by the external

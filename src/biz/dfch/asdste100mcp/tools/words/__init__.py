@@ -24,12 +24,12 @@ at once::
     from biz.dfch.asdste100mcp.tools import words  # noqa: F401 (side-effects only)
 """
 
-from . import word_count, word_find, word_list, word_match, word_similar  # noqa: F401
+from . import word_count, word_find, word_fuzzy, word_list, word_match  # noqa: F401
 
 __all__ = [
     "word_count",
     "word_find",
+    "word_fuzzy",
     "word_list",
     "word_match",
-    "word_similar",
 ]

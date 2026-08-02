@@ -15,26 +15,26 @@
 #
 # SPDX-License-Identifier: AGPL-3.0-or-later
 
-"""Tests for the word_similar tool."""
+"""Tests for the word_fuzzy tool."""
 
 import unittest
 
 from biz.dfch.asdste100vocab import Vocab
 
 
-class TestWordSimilar(unittest.TestCase):
-    """Tests for the word_similar tool."""
+class TestWordFuzzy(unittest.TestCase):
+    """Tests for the word_fuzzy tool."""
 
     def setUp(self):
         self.vocab = Vocab()
 
-    def test_similar_returns_results(self):
+    def test_fuzzy_returns_results(self):
         """A fuzzy lookup for a known word must return at least one entry."""
         result = self.vocab.similar("use")
         self.assertIsInstance(result, list)
         self.assertGreater(len(result), 0)
 
-    def test_similar_returns_list_for_unknown_word(self):
+    def test_fuzzy_returns_list_for_unknown_word(self):
         """A fuzzy lookup for a nonsense word must return a list (possibly empty)."""
         result = self.vocab.similar("zzznonsense")
         self.assertIsInstance(result, list)

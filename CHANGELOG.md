@@ -26,6 +26,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated release workflow documentation in README.md to include MCP Registry publishing step
 - Added "MCP Registry Publishing" section in README.md with setup and verification instructions
 - **Breaking**: Upgraded MCP dependency to version 2.0.0, requiring MCP protocol 2.0 or newer
+- **Breaking**: Renamed the `word_similar` vocabulary tool to `word_fuzzy` for clarity
+  (`tools/words/word_similar.py` → `tools/words/word_fuzzy.py`). Any caller invoking the
+  tool by its previous name must switch to `word_fuzzy`.
 
 
 ## [1.0.0] - 2026-08-01
