@@ -17,23 +17,23 @@
 
 """Typed configuration via pydantic-settings.
 
-All settings are read from environment variables with the ``STE100_MCP_``
+All settings are read from environment variables with the ``ASDSTE100_MCP_``
 prefix.  A ``.env`` file is loaded by the CLI before the server starts, so
 values set there are visible here.
 
 Environment variables
 ---------------------
-STE100_MCP_FILES
+ASDSTE100_MCP_FILES
     Colon-separated list of paths to additional vocabulary files to load.
-    Example: ``STE100_MCP_FILES=/data/custom.jsonl:/data/extra.jsonl``
-STE100_MCP_USE_STE100
+    Example: ``ASDSTE100_MCP_FILES=/data/custom.jsonl:/data/extra.jsonl``
+ASDSTE100_MCP_USE_STE100
     Load the built-in ASD-STE100 Issue 9 vocabulary (default: true).
-STE100_MCP_USE_STE100_TECHNICAL_WORDS
+ASDSTE100_MCP_USE_STE100_TECHNICAL_WORDS
     Also load the STE100 technical words vocabulary (default: false).
-STE100_MCP_RULES_FILES
+ASDSTE100_MCP_RULES_FILES
     Colon-separated list of paths to additional rules files to load.
-    Example: ``STE100_MCP_RULES_FILES=/data/custom_rules.json``
-STE100_MCP_USE_STE100_RULES
+    Example: ``ASDSTE100_MCP_RULES_FILES=/data/custom_rules.json``
+ASDSTE100_MCP_USE_STE100_RULES
     Load the built-in ASD-STE100 Issue 9 ruleset (default: true).
 
 Singleton helpers
@@ -63,7 +63,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     """Vocab initialisation settings."""
 
-    model_config = SettingsConfigDict(env_prefix="STE100_MCP_", extra="ignore")
+    model_config = SettingsConfigDict(env_prefix="ASDSTE100_MCP_", extra="ignore")
 
     files: list[Path] = Field(default_factory=list)
     use_ste100: bool = True
@@ -101,9 +101,9 @@ class Factory:
         """Create and store the shared :class:`Settings` instance.
 
         Reads configuration from environment variables, merges *extra_files*
-        with any paths already set via ``STE100_MCP_FILES`` and
+        with any paths already set via ``ASDSTE100_MCP_FILES`` and
         *extra_rules_files* with any paths already set via
-        ``STE100_MCP_RULES_FILES`` (duplicates removed, order preserved),
+        ``ASDSTE100_MCP_RULES_FILES`` (duplicates removed, order preserved),
         and stores the result.
 
         Parameters

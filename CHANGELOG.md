@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `server.json` at repository root defining MCP Registry metadata:
   - Server identity: `io.github.dfch/biz-dfch-asdste100mcp` (GitHub OIDC namespace)
   - PyPI package configuration with `biz-dfch-asdste100mcp` identifier
-  - Documentation of all 8 `STE100_MCP_*` environment variables with format hints
+  - Documentation of all 8 `ASDSTE100_MCP_*` environment variables with format hints
   - Conforms to MCP Registry schema v2025-12-11
 - PyPI ownership verification marker in README.md long-description for registry discovery
 
@@ -34,6 +34,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   server/Typer app name to match. Update any launch command, OpenCode
   `mcp` config, or shell alias that invokes `ste100-mcp` to use
   `asdste100-mcp` instead.
+- **Breaking**: Renamed all `STE100_MCP_*` environment variables to
+  `ASDSTE100_MCP_*` (`STE100_MCP_TRANSPORT`, `STE100_MCP_HOST`,
+  `STE100_MCP_PORT`, `STE100_MCP_FILES`, `STE100_MCP_USE_STE100`,
+  `STE100_MCP_USE_STE100_TECHNICAL_WORDS`, `STE100_MCP_RULES_FILES`,
+  `STE100_MCP_USE_STE100_RULES`), matching the `asdste100-mcp` entry point
+  name (`settings.py`'s `env_prefix`, `cli.py`'s `envvar=` bindings, and
+  `server.json`). Update any `.env` file, shell environment, or deployment
+  config that sets these variables under their previous names.
 
 
 ## [1.0.0] - 2026-08-01

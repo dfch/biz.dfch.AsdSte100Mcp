@@ -90,16 +90,16 @@ uv run --frozen asdste100-mcp --transport sse --host localhost --port 8000
 
 ### Configuration
 - `settings.py` — Pydantic `Settings` model + `Factory` singleton:
-  - `STE100_MCP_TRANSPORT` (stdio/sse)
-  - `STE100_MCP_HOST`, `STE100_MCP_PORT` (SSE only)
-  - `STE100_MCP_FILES` — colon-separated custom vocabulary paths
-  - `STE100_MCP_USE_STE100` (load built-in vocab)
-  - `STE100_MCP_USE_STE100_TECHNICAL_WORDS` (load technical words)
-  - `STE100_MCP_RULES_FILES` — colon-separated custom rules-file paths
-  - `STE100_MCP_USE_STE100_RULES` (load built-in ruleset)
+  - `ASDSTE100_MCP_TRANSPORT` (stdio/sse)
+  - `ASDSTE100_MCP_HOST`, `ASDSTE100_MCP_PORT` (SSE only)
+  - `ASDSTE100_MCP_FILES` — colon-separated custom vocabulary paths
+  - `ASDSTE100_MCP_USE_STE100` (load built-in vocab)
+  - `ASDSTE100_MCP_USE_STE100_TECHNICAL_WORDS` (load technical words)
+  - `ASDSTE100_MCP_RULES_FILES` — colon-separated custom rules-file paths
+  - `ASDSTE100_MCP_USE_STE100_RULES` (load built-in ruleset)
 - `Factory.create_instance(extra_files, extra_rules_files)` — called once by
   the CLI before `mcp.run()`; merges CLI `--file`/`--rules-file` paths with
-  `STE100_MCP_FILES`/`STE100_MCP_RULES_FILES`.
+  `ASDSTE100_MCP_FILES`/`ASDSTE100_MCP_RULES_FILES`.
 - `Factory.get_instance()` — called by `_lifespan` in `server.py`;
   asserts `create_instance` was called first.
 

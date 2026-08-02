@@ -127,27 +127,27 @@ bunx @modelcontextprotocol/inspector
 
 | Option | Env var | Default | Description |
 |---|---|---|---|
-| `--transport` | `STE100_MCP_TRANSPORT` | `stdio` | Transport mode: `stdio` or `sse` |
-| `--host` | `STE100_MCP_HOST` | `localhost` | Bind address (SSE only) |
-| `--port` | `STE100_MCP_PORT` | `8000` | TCP port (SSE only) |
+| `--transport` | `ASDSTE100_MCP_TRANSPORT` | `stdio` | Transport mode: `stdio` or `sse` |
+| `--host` | `ASDSTE100_MCP_HOST` | `localhost` | Bind address (SSE only) |
+| `--port` | `ASDSTE100_MCP_PORT` | `8000` | TCP port (SSE only) |
 | `--env` | — | auto-discovered | Path to a `.env` file |
-| `--file` / `-f` | `STE100_MCP_FILES` | _(empty)_ | Path to a vocabulary file (`*.jsonl`); repeatable |
-| `--rules-file` / `-r` | `STE100_MCP_RULES_FILES` | _(empty)_ | Path to a rules file (a single JSON array); repeatable |
+| `--file` / `-f` | `ASDSTE100_MCP_FILES` | _(empty)_ | Path to a vocabulary file (`*.jsonl`); repeatable |
+| `--rules-file` / `-r` | `ASDSTE100_MCP_RULES_FILES` | _(empty)_ | Path to a rules file (a single JSON array); repeatable |
 
 ### Vocabulary configuration
 
 | Env var | Default | Description |
 |---|---|---|
-| `STE100_MCP_FILES` | _(empty)_ | Colon-separated paths to additional vocabulary files |
-| `STE100_MCP_USE_STE100` | `true` | Load the built-in ASD-STE100 Issue 9 vocabulary |
-| `STE100_MCP_USE_STE100_TECHNICAL_WORDS` | `false` | Also load the technical words vocabulary |
+| `ASDSTE100_MCP_FILES` | _(empty)_ | Colon-separated paths to additional vocabulary files |
+| `ASDSTE100_MCP_USE_STE100` | `true` | Load the built-in ASD-STE100 Issue 9 vocabulary |
+| `ASDSTE100_MCP_USE_STE100_TECHNICAL_WORDS` | `false` | Also load the technical words vocabulary |
 
 ### Rules configuration
 
 | Env var | Default | Description |
 |---|---|---|
-| `STE100_MCP_RULES_FILES` | _(empty)_ | Colon-separated paths to additional rules files (each a single JSON array) |
-| `STE100_MCP_USE_STE100_RULES` | `true` | Load the built-in ASD-STE100 Issue 9 ruleset |
+| `ASDSTE100_MCP_RULES_FILES` | _(empty)_ | Colon-separated paths to additional rules files (each a single JSON array) |
+| `ASDSTE100_MCP_USE_STE100_RULES` | `true` | Load the built-in ASD-STE100 Issue 9 ruleset |
 
 ## Add to OpenCode
 

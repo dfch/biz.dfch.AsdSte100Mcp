@@ -62,16 +62,16 @@ The server can be started in two transport modes:
 
 Environment variables (all optional, CLI flags take precedence):
 
-``STE100_MCP_TRANSPORT``
+``ASDSTE100_MCP_TRANSPORT``
     ``stdio`` (default) or ``sse``.
-``STE100_MCP_HOST``
+``ASDSTE100_MCP_HOST``
     Bind address for SSE mode (default ``localhost``).
-``STE100_MCP_PORT``
+``ASDSTE100_MCP_PORT``
     TCP port for SSE mode (default ``8000``).
-``STE100_MCP_FILES``
+``ASDSTE100_MCP_FILES``
     Colon-separated list of additional vocabulary files.  The ``--file``
     CLI flag is merged with this list (duplicates are removed).
-``STE100_MCP_RULES_FILES``
+``ASDSTE100_MCP_RULES_FILES``
     Colon-separated list of additional rules files.  The ``--rules-file``
     CLI flag is merged with this list (duplicates are removed).
 """
@@ -138,7 +138,7 @@ def serve(  # pylint: disable=R0913,R0917
         typer.Option(
             "--transport",
             "-t",
-            envvar="STE100_MCP_TRANSPORT",
+            envvar="ASDSTE100_MCP_TRANSPORT",
             help="Transport mode: 'stdio' or 'sse'.",
             show_default=True,
         ),
@@ -148,7 +148,7 @@ def serve(  # pylint: disable=R0913,R0917
         typer.Option(
             "--host",
             "-h",
-            envvar="STE100_MCP_HOST",
+            envvar="ASDSTE100_MCP_HOST",
             help="Bind address (SSE mode only).",
             show_default=True,
         ),
@@ -158,7 +158,7 @@ def serve(  # pylint: disable=R0913,R0917
         typer.Option(
             "--port",
             "-p",
-            envvar="STE100_MCP_PORT",
+            envvar="ASDSTE100_MCP_PORT",
             help="TCP port (SSE mode only).",
             show_default=True,
         ),

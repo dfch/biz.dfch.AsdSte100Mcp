@@ -18,49 +18,49 @@
       },
       "environmentVariables": [
         {
-          "name": "STE100_MCP_TRANSPORT",
+          "name": "ASDSTE100_MCP_TRANSPORT",
           "description": "Transport mode: stdio or sse",
           "isRequired": false,
           "format": "string"
         },
         {
-          "name": "STE100_MCP_HOST",
+          "name": "ASDSTE100_MCP_HOST",
           "description": "Bind address (SSE transport only)",
           "isRequired": false,
           "format": "string"
         },
         {
-          "name": "STE100_MCP_PORT",
+          "name": "ASDSTE100_MCP_PORT",
           "description": "TCP port (SSE transport only)",
           "isRequired": false,
           "format": "string"
         },
         {
-          "name": "STE100_MCP_FILES",
+          "name": "ASDSTE100_MCP_FILES",
           "description": "Colon-separated paths to additional vocabulary .jsonl files",
           "isRequired": false,
           "format": "string"
         },
         {
-          "name": "STE100_MCP_USE_STE100",
+          "name": "ASDSTE100_MCP_USE_STE100",
           "description": "Load the built-in ASD-STE100 Issue 9 vocabulary",
           "isRequired": false,
           "format": "boolean"
         },
         {
-          "name": "STE100_MCP_USE_STE100_TECHNICAL_WORDS",
+          "name": "ASDSTE100_MCP_USE_STE100_TECHNICAL_WORDS",
           "description": "Also load the technical words vocabulary",
           "isRequired": false,
           "format": "boolean"
         },
         {
-          "name": "STE100_MCP_RULES_FILES",
+          "name": "ASDSTE100_MCP_RULES_FILES",
           "description": "Colon-separated paths to additional rules files (JSON array each)",
           "isRequired": false,
           "format": "string"
         },
         {
-          "name": "STE100_MCP_USE_STE100_RULES",
+          "name": "ASDSTE100_MCP_USE_STE100_RULES",
           "description": "Load the built-in ASD-STE100 Issue 9 ruleset",
           "isRequired": false,
           "format": "boolean"
