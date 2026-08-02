@@ -20,7 +20,7 @@ wrapper models for the ASD-STE100 rules tools.
 
 Usage::
 
-    from biz.dfch.asdste100mcp.models import Word, WordMeaning, WordNote, TocEntry
+    from biz.dfch.asdste100mcp.models import Word, WordFindEntry, WordMeaning, WordNote, TocEntry
 """
 
 from .paged_result import PagedResult
@@ -29,6 +29,7 @@ from .search_result import SearchResult
 from .toc_entry import TocEntry
 from .version_info import VersionInfo
 from .word import Word
+from .word_find_entry import WordFindEntry
 from .word_meaning import WordMeaning
 from .word_note import WordNote
 from .word_result import WordResult
@@ -40,6 +41,7 @@ __all__ = [
     "TocEntry",
     "VersionInfo",
     "Word",
+    "WordFindEntry",
     "WordMeaning",
     "WordNote",
     "WordResult",

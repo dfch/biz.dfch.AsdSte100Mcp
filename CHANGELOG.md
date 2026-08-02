@@ -7,19 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-08-02
+
 ### Added
 
+- `word_find_many` tool — exact-match search for multiple terms in a single
+  call. Accepts a list of 1-25 terms and returns one `WordFindEntry`
+  (`term` + `results`) per input term, in the same order as the input, so
+  a term matching zero, one, or several vocabulary entries is always
+  represented positionally rather than as a flattened, ambiguous list.
+  New `models/word_find_entry.py` (`WordFindEntry` model) and
+  `tools/words/word_find_many.py`, registered in `tools/words/__init__.py`.
 - `asdste100://version` MCP resource — installed version numbers of the MCP
   server itself (`biz-dfch-asdste100mcp`) and its three data-backing
   libraries: `biz-dfch-asdste100vocab`, `biz-dfch-asdste100rules`, and
   `biz-dfch-asdste100nlp`. Backed by `importlib.metadata.version()`; no
   network calls. New `models/version_info.py` (`VersionInfo` model) and
   `resources/version.py`, registered in `resources/__init__.py`.
-
-## [3.0.0] - 2026-08-02
-
-### Added
-
 - MCP resource support, in addition to tools:
   - `asdste100://rules/toc` — table-of-contents outline of the ruleset (mirrors
     the `rules_toc` tool with no `section` filter).
