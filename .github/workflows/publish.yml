@@ -90,37 +90,6 @@ jobs:
       # uses: pypa/gh-action-pypi-publish@release/v1
       uses: pypa/gh-action-pypi-publish@ba38be9e461d3875417946c167d0b5f3d385a247
 
-  publish-to-mcp-registry:
-    name: Publish to MCP Registry
-    needs: [publish-to-pypi]
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write
-      contents: read
-    steps:
-    - name: Checkout
-      # uses: actions/checkout@v5
-      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
-
-    - name: Install mcp-publisher
-      run: |
-        curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
-        chmod +x mcp-publisher
-
-    - name: Update server.json version
-      run: |
-        VERSION=${GITHUB_REF#refs/tags/v}
-        jq --arg v "$VERSION" '.version = $v | .packages[0].version = $v' server.json > server.tmp && mv server.tmp server.json
-        cat server.json
-
-    - name: Authenticate to MCP Registry (GitHub OIDC)
-      run: ./mcp-publisher login github-oidc
-
-    - name: Publish to MCP Registry
-      run: ./mcp-publisher publish
-
   create-github-release:
     name: Make GitHub Release
     needs: [publish-to-pypi]
@@ -163,3 +132,45 @@ jobs:
         VERSION=${{ github.ref_name }}
         gh release create ${VERSION} --title "${VERSION}" --generate-notes || true
         gh release upload ${VERSION} dist/* --clobber
+
+  publish-to-mcp-registry:
+    name: Publish to MCP Registry
+    needs: [publish-to-pypi]
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+    - name: Checkout
+      # uses: actions/checkout@v5
+      uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8
+
+    - name: Verify tools 1
+      run: |
+        curl --version
+        jq --version
+        cat --version
+
+    - name: Install mcp-publisher
+      run: |
+        curl -L "https://github.com/modelcontextprotocol/registry/releases/latest/download/mcp-publisher_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/').tar.gz" | tar xz mcp-publisher
+        chmod +x mcp-publisher
+
+    - name: Verify tools 2
+      run: |
+        ./mcp-publisher --version
+
+    - name: Update server.json version
+      run: |
+        VERSION=${GITHUB_REF#refs/tags/v}
+        jq --arg v "$VERSION" '.version = $v | .packages[0].version = $v' server.json > server.tmp && mv server.tmp server.json
+        cat server.json
+
+    - name: Authenticate to MCP Registry (GitHub OIDC)
+      run: ./mcp-publisher login github-oidc
+
+    - name: Publish to MCP Registry
+      run: ./mcp-publisher publish
+
